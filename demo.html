@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Demo ResetPro Tinta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+/* Escena vertical 9:16 (360×640) que se escala para llenar el marco: arriba el texto
+   del paso, al centro la impresora o la ventana de la app, abajo el avance. */
+:root{
+  color-scheme:dark;
+  --fondo:#0B1626; --fondo2:#12233A;
+  --texto:#F2F6FB; --tenue:#8FA3BF;
+  --cian:#00A7E1; --magenta:#E5197E; --amarillo:#FFC928; --negro:#1D2430;
+  --rojo:#E5372B; --verde:#14A44D; --naranja:#FF9F1A; --wa:#25D366;
+  /* ventana de macOS (claro, como la ve el cliente) */
+  --ven:#ECECEC; --ven-borde:#C9C9C9; --ven-texto:#1D1D1F; --ven-gris:#6E6E73;
+  --boton:#FFFFFF; --azul:#0A84FF;
+  --display:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mac:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,Menlo,Consolas,monospace;
+}
+html,body{height:100%;margin:0}
+body{background:var(--fondo);overflow:hidden;font-family:var(--mac);color:var(--texto)}
+.escena{position:absolute;left:50%;top:50%;width:360px;height:640px;margin:-320px 0 0 -180px;
+  background:radial-gradient(120% 70% at 50% 0%,var(--fondo2),var(--fondo) 70%);transform-origin:50% 50%}
+
+/* Texto del paso */
+.paso{position:absolute;left:22px;right:22px;top:26px;height:112px}
+.paso small{display:block;font:700 11px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--amarillo)}
+.paso p{margin:10px 0 0;font:700 22px/1.2 var(--display);text-wrap:balance;transition:opacity .35s}
+.paso p.fuera{opacity:0}
+
+/* Avance */
+.avance{position:absolute;left:0;right:0;bottom:26px;display:flex;justify-content:center;gap:6px}
+.avance i{width:18px;height:4px;border-radius:2px;background:rgba(255,255,255,.18);transition:background .3s,width .3s}
+.avance i.si{background:var(--amarillo);width:28px}
+.control{position:absolute;right:14px;bottom:14px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.06);color:var(--texto);font-size:13px;cursor:pointer;display:grid;place-items:center}
+.control:focus-visible{outline:2px solid var(--amarillo);outline-offset:2px}
+
+/* Capas que se alternan */
+.capa{position:absolute;left:0;right:0;top:150px;height:440px;transition:opacity .45s,transform .45s}
+.capa.oculta{opacity:0;transform:translateY(12px);pointer-events:none}
+
+/* ---------- Impresora EcoTank ---------- */
+.impresora{position:absolute;left:40px;top:70px;width:280px;height:200px}
+.papel-entra{position:absolute;left:62px;top:0;width:120px;height:46px;background:#F7F7F2;border-radius:3px 3px 0 0;
+  box-shadow:inset 0 -6px 8px rgba(0,0,0,.08)}
+.cuerpo{position:absolute;left:0;top:34px;width:240px;height:120px;background:linear-gradient(#2B3442,#1E2531);border-radius:14px;
+  box-shadow:0 18px 30px -12px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08)}
+.tapa{position:absolute;left:14px;top:12px;width:212px;height:22px;border-radius:6px;background:#343E4E}
+.panel{position:absolute;left:18px;top:52px;display:flex;gap:12px;align-items:center}
+.led{width:9px;height:9px;border-radius:50%;background:#3A4454}
+.led.naranja{background:var(--naranja);box-shadow:0 0 10px var(--naranja)}
+.led.verde{background:var(--verde);box-shadow:0 0 10px var(--verde)}
+.bloqueada .led.a{animation:parpadeo 1s steps(1) infinite}
+.bloqueada .led.b{animation:parpadeo 1s steps(1) infinite .5s}
+@keyframes parpadeo{50%{background:#3A4454;box-shadow:none}}
+.etq{font:600 8px/1 var(--mac);color:#8592A6;letter-spacing:.08em}
+.bandeja{position:absolute;left:46px;top:126px;width:150px;height:14px;background:#151B25;border-radius:0 0 8px 8px}
+.hoja{position:absolute;left:58px;top:122px;width:126px;height:0;background:#FBFBF8;border-radius:0 0 3px 3px;overflow:hidden;
+  transition:height 2.4s ease-out}
+.hoja.sale{height:84px}
+.hoja b{display:block;height:5px;margin:9px 12px 0;border-radius:2px}
+.tanques{position:absolute;left:244px;top:46px;display:flex;gap:3px}
+.tanque{width:8px;height:96px;border-radius:3px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}
+.tanque::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--n);background:var(--c)}
+.globo{position:absolute;left:24px;right:24px;top:300px;padding:12px 14px;border-radius:12px;font:600 13px/1.35 var(--mac);text-align:center}
+.globo.mal{background:rgba(229,55,43,.14);color:#FFB4AE;border:1px solid rgba(229,55,43,.4)}
+.globo.bien{background:rgba(20,164,77,.14);color:#9BE7B8;border:1px solid rgba(20,164,77,.45)}
+
+/* ---------- Ventana de la app ---------- */
+.ventana{position:absolute;left:12px;top:0;width:336px;background:var(--ven);color:var(--ven-texto);border-radius:10px;
+  box-shadow:0 24px 50px -14px rgba(0,0,0,.7),0 0 0 .5px rgba(0,0,0,.4);overflow:hidden;font-size:10.5px}
+.barra-tit{height:24px;display:flex;align-items:center;justify-content:center;position:relative;background:#E3E3E3;border-bottom:1px solid var(--ven-borde);
+  font-weight:600;font-size:10.5px;color:#4A4A4F}
+.semaforo{position:absolute;left:9px;top:7px;display:flex;gap:6px}
+.semaforo i{width:10px;height:10px;border-radius:50%;background:#FF5F57}
+.semaforo i:nth-child(2){background:#FEBC2E}.semaforo i:nth-child(3){background:#28C840}
+.cont{padding:12px 13px 13px;display:flex;flex-direction:column;gap:6px;position:relative}
+.cab{display:flex;justify-content:space-between;align-items:center}
+.cab strong{font-size:15px}
+.btn{font:400 10px/1 var(--mac);background:var(--boton);border:1px solid #BDBDBD;border-radius:5px;padding:4px 8px;color:var(--ven-texto);
+  box-shadow:0 .5px 1px rgba(0,0,0,.12);white-space:nowrap;transition:transform .12s,background .12s}
+.btn.pri{background:var(--azul);border-color:#0A6FE0;color:#fff}
+.btn.off{color:#ABABAB}
+.btn.clic{transform:scale(.94);background:#DADADA}
+.btn.pri.clic{background:#0062CC}
+.modelo{font-size:12px;font-weight:700;margin-top:4px}
+.serie{color:var(--ven-gris)}
+.compat{font-weight:700;font-size:10.5px;min-height:13px}
+.compat.rojo{color:#D92D20}.compat.verde{color:#067647}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #D4D4D4;font-size:9.5px;font-variant-numeric:tabular-nums}
+th{font-weight:500;text-align:left;color:var(--ven-gris);background:#F5F5F5;border-bottom:1px solid #DDD;padding:3px 5px}
+td{padding:3px 5px;height:12px;white-space:nowrap}
+tr:nth-child(even) td{background:#F7F9FC}
+td.cambio{animation:destello .9s}
+@keyframes destello{0%{background:#C9F2D6}100%{background:transparent}}
+fieldset{border:1px solid #CFCFCF;border-radius:6px;margin:4px 0 2px;padding:5px 8px 7px;display:flex;align-items:center;gap:5px}
+legend{font-size:9.5px;color:var(--ven-gris);padding:0 3px}
+.lic{flex:1;min-width:0;font-size:9.5px;line-height:1.3}
+.acciones{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.acciones .btn{padding:6px 0;text-align:center}
+.progreso{height:5px;border-radius:3px;background:#D6D6D6;overflow:hidden;position:relative;margin-top:6px}
+.progreso i{position:absolute;top:0;bottom:0;width:30%;background:var(--azul);border-radius:3px;left:-30%;opacity:0}
+.progreso.activo i{opacity:1;animation:vaiven 1.1s ease-in-out infinite alternate}
+@keyframes vaiven{from{left:-10%}to{left:80%}}
+.estado{min-height:26px;font-size:10px;line-height:1.3}
+.estado.rojo{color:#D92D20;font-weight:700}
+
+/* Diálogos dentro de la ventana */
+.velo{position:absolute;inset:24px 0 0 0;background:rgba(0,0,0,.22);opacity:0;transition:opacity .25s;pointer-events:none}
+.velo.si{opacity:1}
+.dialogo{position:absolute;left:22px;right:22px;top:46px;background:#F4F4F4;border-radius:9px;padding:12px 13px;
+  box-shadow:0 16px 36px -8px rgba(0,0,0,.45),0 0 0 .5px rgba(0,0,0,.3);opacity:0;transform:scale(.96);transition:opacity .25s,transform .25s;
+  display:flex;flex-direction:column;gap:5px;font-size:10px;line-height:1.35}
+.dialogo.si{opacity:1;transform:none}
+.dialogo h4{margin:0;font-size:12px}
+.dialogo .t{font-weight:700;margin-top:3px}
+.dialogo .fila{display:flex;gap:5px;justify-content:flex-end;margin-top:4px;flex-wrap:wrap}
+.dialogo .fila.izq{justify-content:flex-start}
+.btn.wa{background:var(--wa);border-color:#1EB457;color:#073B1C;font-weight:600}
+.caja{font:9.5px/1.4 var(--mono);background:#fff;border:1px solid #CFCFCF;border-radius:4px;padding:4px 6px}
+.campo{font:9px/1 var(--mono);background:#fff;border:1.5px solid var(--azul);border-radius:4px;padding:6px;min-height:10px;white-space:nowrap;overflow:hidden}
+.campo::after{content:"";display:inline-block;width:1px;height:10px;background:#111;vertical-align:-1px;animation:cursor 1s steps(1) infinite}
+@keyframes cursor{50%{opacity:0}}
+.alerta{text-align:center;align-items:center}
+.alerta .ico{font-size:22px;line-height:1}
+
+/* Puntero */
+.puntero{position:absolute;left:300px;top:560px;width:18px;height:18px;transition:left .7s cubic-bezier(.4,0,.2,1),top .7s cubic-bezier(.4,0,.2,1),opacity .3s;
+  pointer-events:none;z-index:5;opacity:0;filter:drop-shadow(0 2px 2px rgba(0,0,0,.5))}
+.puntero.si{opacity:1}
+
+@media (prefers-reduced-motion:reduce){
+  .bloqueada .led.a,.bloqueada .led.b,.progreso.activo i{animation:none}
+  .puntero,.capa,.hoja{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="escena" id="escena" role="img" aria-label="Demostración: la app detecta una Epson L120 bloqueada, se compra y activa la licencia, se resetea y la impresora vuelve a imprimir.">
+
+  <div class="paso" aria-hidden="true">
+    <small id="num">Paso 1 de 6</small>
+    <p id="texto">Tu Epson se bloqueó: las luces parpadean y no imprime.</p>
+  </div>
+
+  <!-- Impresora -->
+  <div class="capa" id="capaImpresora">
+    <div class="impresora bloqueada" id="impresora">
+      <div class="papel-entra"></div>
+      <div class="cuerpo">
+        <div class="tapa"></div>
+        <div class="panel">
+          <span class="led verde"></span><span class="etq">ON</span>
+          <span class="led naranja a"></span><span class="etq">TINTA</span>
+          <span class="led naranja b"></span><span class="etq">PAPEL</span>
+        </div>
+      </div>
+      <div class="bandeja"></div>
+      <div class="hoja" id="hoja">
+        <b style="background:var(--cian);width:70%"></b><b style="background:var(--magenta);width:55%"></b>
+        <b style="background:var(--amarillo);width:80%"></b><b style="background:var(--negro);width:62%"></b>
+        <b style="background:var(--negro);width:74%"></b>
+      </div>
+      <div class="tanques">
+        <span class="tanque" style="--c:var(--negro);--n:70%"></span>
+        <span class="tanque" style="--c:var(--cian);--n:62%"></span>
+        <span class="tanque" style="--c:var(--magenta);--n:55%"></span>
+        <span class="tanque" style="--c:var(--amarillo);--n:66%"></span>
+      </div>
+    </div>
+    <div class="globo mal" id="globo">Almohadillas llenas: la impresora se detiene aunque tenga tinta.</div>
+  </div>
+
+  <!-- Ventana de ResetPro Tinta -->
+  <div class="capa oculta" id="capaApp">
+    <div class="ventana" id="ventana">
+      <div class="barra-tit"><span class="semaforo"><i></i><i></i><i></i></span>ResetPro Tinta</div>
+      <div class="cont">
+        <div class="cab"><strong>ResetPro Tinta</strong><span class="btn">Acerca de</span></div>
+        <div class="modelo" id="modelo">Ninguna impresora detectada</div>
+        <div class="serie" id="serie">Conéctala por USB y presiona Buscar.</div>
+        <div class="compat" id="compat"></div>
+        <table>
+          <thead><tr><th>Contador</th><th>Direcciones</th><th>Actual</th><th>Tras reset</th></tr></thead>
+          <tbody id="tabla"><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody>
+        </table>
+        <fieldset><legend>Licencia</legend>
+          <span class="lic" id="lic">Busca una impresora para ver si se puede resetear.</span>
+          <span class="btn off" id="bComprar">Comprar</span><span class="btn off" id="bActivar">Activar…</span>
+        </fieldset>
+        <div class="acciones">
+          <span class="btn" id="bBuscar">Buscar</span><span class="btn off" id="bRespaldo">Respaldo</span>
+          <span class="btn off" id="bReset">Resetear</span><span class="btn off" id="bRestaurar">Restaurar…</span>
+        </div>
+        <div class="progreso" id="progreso"><i></i></div>
+        <div class="estado" id="estado"></div>
+      </div>
+
+      <div class="velo" id="velo"></div>
+
+      <div class="dialogo" id="dComprar">
+        <h4>Esta impresora sí se puede resetear</h4>
+        <div>Licencia para 1 impresora: <b>$10 USD</b></div>
+        <div class="t">1. Realiza tu pago</div>
+        <div>Escríbenos por WhatsApp y te decimos cómo pagar.</div>
+        <div class="t">2. Envía tu comprobante de pago con estos datos</div>
+        <div class="caja">Modelo: EPSON L120<br>Serie: 544E554B3138333321</div>
+        <div class="fila izq"><span class="btn wa" id="bWa">Enviar por WhatsApp</span><span class="btn">Copiar datos</span></div>
+        <div class="t">3. Recibe tu clave y actívala</div>
+        <div class="fila"><span class="btn">Cerrar</span><span class="btn pri" id="bYaTengo">Ya tengo mi clave…</span></div>
+      </div>
+
+      <div class="dialogo" id="dActivar">
+        <h4>Activar licencia</h4>
+        <div>Pega la clave para la impresora 544E554B3138333321:</div>
+        <div class="campo" id="campo"></div>
+        <div class="fila"><span class="btn" style="margin-right:auto">Pegar</span><span class="btn">Cancelar</span><span class="btn pri" id="bOkActivar">Activar</span></div>
+      </div>
+
+      <div class="dialogo alerta" id="dOk">
+        <span class="ico">✅</span><h4>Licencia activada</h4>
+        <div>¡Gracias! Ya puedes resetear esta impresora.</div>
+        <div class="fila"><span class="btn pri" id="bOk">OK</span></div>
+      </div>
+
+      <div class="dialogo" id="dConfirmar">
+        <h4>Resetear contador</h4>
+        <div>El reset NO limpia las almohadillas.</div>
+        <div>¿Están limpias o tienes un frasco externo de desecho?</div>
+        <div>Se hará un respaldo automático antes de escribir.</div>
+        <div class="fila"><span class="btn">No</span><span class="btn pri" id="bSi">Sí</span></div>
+      </div>
+
+      <div class="dialogo alerta" id="dListo">
+        <span class="ico">🖨️</span><h4>Listo</h4>
+        <div>Apaga la impresora, espera 10 segundos y préndela.</div>
+        <div class="fila"><span class="btn pri" id="bListo">OK</span></div>
+      </div>
+    </div>
+  </div>
+
+  <svg class="puntero" id="puntero" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 1l13 8.5-6 .9 3.6 6.2-2.2 1.2-3.6-6.3L2 15z" fill="#fff" stroke="#111" stroke-width="1.1" stroke-linejoin="round"/></svg>
+
+  <div class="avance" id="avance" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <button class="control" id="control" type="button" aria-label="Pausar">❚❚</button>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const escena = $("escena");
+
+// Escalar la escena 360×640 al tamaño del marco
+function ajustar(){
+  const s = Math.min(innerWidth / 360, innerHeight / 640);
+  escena.style.transform = `scale(${s})`;
+}
+addEventListener("resize", ajustar); ajustar();
+
+// Datos reales de la L120 de prueba (lectura de la app)
+const ANTES = [["Waste counter","24, 25","63, 24","0, 0"],["Waste counters (?)","28, 29, 46","246, 40, 104","0, 0, 94"],["Waste counter","30","0","0"]];
+const CLAVE = "TKOF6P7E-HSIL65ZJ-Q3MV2XNA-EUOJUAY";
+
+let pausa = false, ronda = 0;
+const reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+async function espera(ms, r){
+  let t = 0;
+  while (t < ms){
+    await new Promise(ok => setTimeout(ok, 50));
+    if (r !== ronda) throw "reinicio";
+    if (!pausa) t += 50;
+  }
+}
+
+function paso(n, texto){
+  $("num").textContent = `Paso ${n} de 6`;
+  const p = $("texto"); p.classList.add("fuera");
+  setTimeout(() => { p.textContent = texto; p.classList.remove("fuera"); }, 300);
+  [...$("avance").children].forEach((i, k) => i.classList.toggle("si", k < n));
+}
+
+function capa(cual){
+  $("capaImpresora").classList.toggle("oculta", cual !== "impresora");
+  $("capaApp").classList.toggle("oculta", cual !== "app");
+}
+
+// Mover el puntero al centro de un elemento (coordenadas de la escena)
+function apuntar(el){
+  const s = escena.getBoundingClientRect(), r = el.getBoundingClientRect(), k = s.width / 360;
+  const pt = $("puntero");
+  pt.classList.add("si");
+  pt.style.left = ((r.left - s.left + r.width / 2) / k - 2) + "px";
+  pt.style.top = ((r.top - s.top + r.height / 2) / k - 1) + "px";
+}
+async function clic(el, r){
+  apuntar(el); await espera(800, r);
+  el.classList.add("clic"); await espera(180, r); el.classList.remove("clic");
+}
+
+function dialogo(id){
+  ["dComprar","dActivar","dOk","dConfirmar","dListo"].forEach(d => $(d).classList.toggle("si", d === id));
+  $("velo").classList.toggle("si", !!id);
+}
+
+function tabla(filas, cambio){
+  const tr = $("tabla").rows;
+  filas.forEach((f, i) => f.forEach((v, j) => {
+    const td = tr[i].cells[j]; td.textContent = v;
+    td.classList.remove("cambio");
+    if (cambio && j === 2 && v !== ANTES[i][2]) { void td.offsetWidth; td.classList.add("cambio"); }
+  }));
+}
+
+function estadoInicial(){
+  $("impresora").classList.add("bloqueada"); $("hoja").classList.remove("sale");
+  $("globo").className = "globo mal"; $("globo").textContent = "Almohadillas llenas: la impresora se detiene aunque tenga tinta.";
+  document.querySelectorAll(".panel .led.a, .panel .led.b").forEach(l => l.classList.add("naranja"));
+  $("modelo").textContent = "Ninguna impresora detectada";
+  $("serie").textContent = "Conéctala por USB y presiona Buscar.";
+  $("compat").textContent = ""; $("compat").className = "compat";
+  tabla(ANTES.map(() => ["", "", "", ""]));
+  $("lic").textContent = "Busca una impresora para ver si se puede resetear.";
+  ["bComprar","bActivar","bRespaldo","bReset","bRestaurar"].forEach(b => $(b).classList.add("off"));
+  $("estado").textContent = ""; $("estado").className = "estado";
+  $("progreso").classList.remove("activo");
+  $("campo").textContent = "";
+  dialogo(null); $("puntero").classList.remove("si");
+}
+
+function mostrarDetectada(){
+  $("modelo").textContent = "EPSON L120";
+  $("serie").textContent = "Número de serie: 544E554B3138333321";
+  $("compat").textContent = "⚠️ Almohadillas llenas · esta impresora necesita reset"; $("compat").className = "compat rojo";
+  tabla(ANTES);
+  $("lic").textContent = "Detectar y respaldar es gratis. Para resetear esta impresora necesitas una licencia.";
+  ["bComprar","bActivar","bRespaldo","bReset","bRestaurar"].forEach(b => $(b).classList.remove("off"));
+  $("estado").textContent = "⚠️ ATENCIÓN: la impresora tiene las almohadillas llenas y puede bloquearse. Compra tu licencia para resetearla.";
+  $("estado").className = "estado rojo";
+}
+
+async function demo(r){
+  estadoInicial(); capa("impresora");
+  paso(1, "Tu Epson se bloqueó: las luces parpadean y no imprime.");
+  await espera(3600, r);
+
+  capa("app");
+  paso(2, "Abre ResetPro Tinta y presiona Buscar.");
+  await espera(1400, r);
+  await clic($("bBuscar"), r);
+  $("progreso").classList.add("activo"); $("estado").textContent = "Buscando la impresora…";
+  await espera(2000, r);
+  $("progreso").classList.remove("activo");
+  paso(3, "La app revisa tu impresora gratis y te dice si se puede resetear.");
+  mostrarDetectada();
+  await espera(3800, r);
+
+  paso(4, "Compra tu licencia de $10 USD por WhatsApp.");
+  dialogo("dComprar");
+  await espera(1600, r);
+  await clic($("bWa"), r);
+  await espera(1500, r);
+  await clic($("bYaTengo"), r);
+
+  paso(5, "Pega la clave que te enviamos y actívala.");
+  dialogo("dActivar");
+  await espera(600, r);
+  for (let i = 1; i <= CLAVE.length; i++){ $("campo").textContent = CLAVE.slice(0, i); await espera(45, r); }
+  await espera(400, r);
+  await clic($("bOkActivar"), r);
+  dialogo("dOk");
+  $("lic").textContent = "✅ Activa para la impresora 544E554B3138333321.";
+  ["bComprar","bActivar"].forEach(b => $(b).classList.add("off"));
+  $("estado").className = "estado";
+  $("estado").textContent = "⚠️ ATENCIÓN: la impresora tiene las almohadillas llenas. Presiona Resetear para desbloquearla.";
+  await espera(1300, r);
+  await clic($("bOk"), r);
+  dialogo(null);
+
+  paso(6, "Presiona Resetear. Se hace un respaldo antes de escribir.");
+  await espera(700, r);
+  await clic($("bReset"), r);
+  dialogo("dConfirmar");
+  await espera(1700, r);
+  await clic($("bSi"), r);
+  dialogo(null);
+  $("progreso").classList.add("activo"); $("estado").textContent = "Respaldando y reseteando…";
+  await espera(2600, r);
+  $("progreso").classList.remove("activo");
+  tabla(ANTES.map(f => [f[0], f[1], f[3], f[3]]), true);
+  $("compat").textContent = "✔ Compatible · se puede resetear"; $("compat").className = "compat verde";
+  $("estado").textContent = "✅ Reset hecho. Respaldo: respaldo_L120_544E554B3138333321_…txt";
+  await espera(1200, r);
+  dialogo("dListo");
+  await espera(1600, r);
+  await clic($("bListo"), r);
+  dialogo(null); $("puntero").classList.remove("si");
+  await espera(600, r);
+
+  capa("impresora");
+  $("num").textContent = "Listo";
+  $("texto").textContent = "Apágala, préndela y vuelve a imprimir.";
+  $("impresora").classList.remove("bloqueada");
+  document.querySelectorAll(".panel .led.a, .panel .led.b").forEach(l => l.classList.remove("naranja"));
+  $("globo").className = "globo bien"; $("globo").textContent = "Contador en cero: la impresora trabaja otra vez.";
+  await espera(500, r);
+  $("hoja").classList.add("sale");
+  await espera(4500, r);
+}
+
+async function bucle(){
+  const r = ++ronda;
+  try { for (;;) await demo(r); } catch (e) { /* reinicio */ }
+}
+
+$("control").addEventListener("click", () => {
+  if (reducido && ronda === 0) { pausa = false; bucle(); }
+  else pausa = !pausa;
+  $("control").textContent = pausa ? "▶" : "❚❚";
+  $("control").setAttribute("aria-label", pausa ? "Reproducir" : "Pausar");
+});
+
+if (reducido) {
+  // Sin animación: se queda en el resultado de la búsqueda; el botón la reproduce.
+  capa("app"); mostrarDetectada();
+  $("num").textContent = "Paso 3 de 6";
+  $("texto").textContent = "La app revisa tu impresora gratis y te dice si se puede resetear.";
+  [...$("avance").children].forEach((i, k) => i.classList.toggle("si", k < 3));
+  $("control").textContent = "▶"; $("control").setAttribute("aria-label", "Reproducir");
+} else {
+  bucle();
+}
+</script>
+</body>
+</html>

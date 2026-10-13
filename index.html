@@ -108,6 +108,8 @@ section{padding:clamp(56px,9vw,104px) 0}
 .video .sub{color:#C5D1E2}
 .marco{margin:40px auto 0;max-width:380px;aspect-ratio:9/16;border-radius:28px;background:linear-gradient(160deg,var(--tinta2),#0A1320);border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;text-align:center;padding:24px;color:#8FA3BF;overflow:hidden}
 .marco video{width:100%;height:100%;object-fit:cover;border-radius:20px}
+.marco-demo{padding:0}
+.marco iframe{width:100%;height:100%;border:0;border-radius:28px;display:block}
 .marco .play{width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.1);display:grid;place-items:center;margin:0 auto 14px;font-size:1.8rem;color:#fff}
 
 /* Precio */
@@ -314,14 +316,11 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
   <div class="cont centro">
     <span class="etiqueta" style="color:var(--amarillo)">Míralo funcionar</span>
     <h2>Una impresora bloqueada, desbloqueada en un minuto</h2>
-    <p class="sub">Grabado con una Epson L120 real: de luces parpadeando a imprimir otra vez.</p>
-    <div class="marco">
-      <!-- Cuando tengas el video, cambia este bloque por:
+    <p class="sub">Así se ve la app con una Epson L120: de luces parpadeando a imprimir otra vez.</p>
+    <div class="marco marco-demo">
+      <!-- Para un video real: cambia el iframe por
            <video src="video/demo.mp4" controls playsinline preload="metadata" poster="video/portada.jpg"></video> -->
-      <div>
-        <div class="play">▶</div>
-        Video de demostración<br>muy pronto
-      </div>
+      <iframe src="demo.html" title="Demostración animada de ResetPro Tinta" loading="lazy"></iframe>
     </div>
   </div>
 </section>
