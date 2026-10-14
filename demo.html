@@ -123,11 +123,17 @@ legend{font-size:9.5px;color:var(--ven-gris);padding:0 3px}
 .dialogo .t{font-weight:700;margin-top:3px}
 .dialogo .fila{display:flex;gap:5px;justify-content:flex-end;margin-top:4px;flex-wrap:wrap}
 .dialogo .fila.izq{justify-content:flex-start}
-.btn.wa{background:var(--wa);border-color:#1EB457;color:#073B1C;font-weight:600}
-.caja{font:9.5px/1.4 var(--mono);background:#fff;border:1px solid #CFCFCF;border-radius:4px;padding:4px 6px}
-.campo{font:9px/1 var(--mono);background:#fff;border:1.5px solid var(--azul);border-radius:4px;padding:6px;min-height:10px;white-space:nowrap;overflow:hidden}
-.campo::after{content:"";display:inline-block;width:1px;height:10px;background:#111;vertical-align:-1px;animation:cursor 1s steps(1) infinite}
-@keyframes cursor{50%{opacity:0}}
+.btn.mp{background:#009EE3;border-color:#0089C7;color:#fff;font-weight:600}
+.btn.mp.clic{background:#0083BD}
+.btn.ancho{flex:1;text-align:center;padding:7px 0}
+.esperando{min-height:13px;color:var(--ven-gris)}
+/* Navegador con Mercado Pago, encima de la ventana de la app */
+.navegador{top:30px;background:#fff;padding-top:0;overflow:hidden}
+.navegador .url{margin:0 -13px 6px;padding:5px 10px;background:#ECECEC;border-bottom:1px solid #DDD;font-size:9px;color:#555}
+.opcion{border:1px solid #E2E2E2;border-radius:6px;padding:6px 8px}
+.opcion.si{border-color:#009EE3;box-shadow:inset 0 0 0 1px #009EE3}
+.aprobado{min-height:14px;font-weight:700;color:#067647;text-align:center;opacity:0;transition:opacity .3s}
+.aprobado.si{opacity:1}
 .alerta{text-align:center;align-items:center}
 .alerta .ico{font-size:22px;line-height:1}
 
@@ -205,27 +211,31 @@ legend{font-size:9.5px;color:var(--ven-gris);padding:0 3px}
 
       <div class="velo" id="velo"></div>
 
+      <!-- Igual que comprar_en_linea() de epson_app.py, sin el renglón del precio:
+           el cliente ve el costo hasta que la app detecta su impresora. -->
       <div class="dialogo" id="dComprar">
         <h4>Esta impresora sí se puede resetear</h4>
-        <div class="t">1. Realiza tu pago</div>
-        <div>Escríbenos por WhatsApp y te decimos cómo pagar.</div>
-        <div class="t">2. Envía tu comprobante de pago con estos datos</div>
-        <div class="caja">Modelo: EPSON L120<br>Serie: 544E554B3138333321</div>
-        <div class="fila izq"><span class="btn wa" id="bWa">Enviar por WhatsApp</span><span class="btn">Copiar datos</span></div>
-        <div class="t">3. Recibe tu clave y actívala</div>
-        <div class="fila"><span class="btn">Cerrar</span><span class="btn pri" id="bYaTengo">Ya tengo mi clave…</span></div>
+        <div><b>✅ Licencia perpetua: resetea esta impresora todas las veces que lo necesites.</b></div>
+        <div>Paga con tarjeta, OXXO o tu cuenta de Mercado Pago. En cuanto se confirme el pago, la licencia se activa sola aquí.</div>
+        <div class="fila izq"><span class="btn mp" id="bPagar">Pagar con Mercado Pago</span></div>
+        <div class="esperando" id="esperando"></div>
+        <div class="fila"><span class="btn">Cerrar</span></div>
       </div>
 
-      <div class="dialogo" id="dActivar">
-        <h4>Activar licencia</h4>
-        <div>Pega la clave para la impresora 544E554B3138333321:</div>
-        <div class="campo" id="campo"></div>
-        <div class="fila"><span class="btn" style="margin-right:auto">Pegar</span><span class="btn">Cancelar</span><span class="btn pri" id="bOkActivar">Activar</span></div>
+      <!-- El navegador con el pago de Mercado Pago -->
+      <div class="dialogo navegador" id="dNavegador">
+        <div class="url">🔒 mercadopago.com.mx</div>
+        <h4>Licencia ResetPro Tinta · EPSON L120</h4>
+        <div class="opcion si">💳 Tarjeta de crédito o débito</div>
+        <div class="opcion">🏪 Efectivo en OXXO</div>
+        <div class="opcion">👛 Dinero en Mercado Pago</div>
+        <div class="fila"><span class="btn mp ancho" id="bPagarMp">Pagar</span></div>
+        <div class="aprobado" id="aprobado">✅ ¡Listo! Tu pago fue aprobado</div>
       </div>
 
       <div class="dialogo alerta" id="dOk">
         <span class="ico">✅</span><h4>Licencia activada</h4>
-        <div>¡Gracias! Ya puedes resetear esta impresora.</div>
+        <div>¡Gracias! Tu pago se confirmó y ya puedes resetear esta impresora.</div>
         <div class="fila"><span class="btn pri" id="bOk">OK</span></div>
       </div>
 
@@ -264,7 +274,6 @@ addEventListener("resize", ajustar); ajustar();
 
 // Datos reales de la L120 de prueba (lectura de la app)
 const ANTES = [["Waste counter","24, 25","63, 24","0, 0"],["Waste counters (?)","28, 29, 46","246, 40, 104","0, 0, 94"],["Waste counter","30","0","0"]];
-const CLAVE = "TKOF6P7E-HSIL65ZJ-Q3MV2XNA-EUOJUAY";
 
 let pausa = false, ronda = 0;
 const reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -304,7 +313,7 @@ async function clic(el, r){
 }
 
 function dialogo(id){
-  ["dComprar","dActivar","dOk","dConfirmar","dListo"].forEach(d => $(d).classList.toggle("si", d === id));
+  ["dComprar","dNavegador","dOk","dConfirmar","dListo"].forEach(d => $(d).classList.toggle("si", d === id));
   $("velo").classList.toggle("si", !!id);
 }
 
@@ -329,7 +338,7 @@ function estadoInicial(){
   ["bComprar","bActivar","bRespaldo","bReset","bRestaurar"].forEach(b => $(b).classList.add("off"));
   $("estado").textContent = ""; $("estado").className = "estado";
   $("progreso").classList.remove("activo");
-  $("campo").textContent = "";
+  $("esperando").textContent = ""; $("aprobado").classList.remove("si");
   dialogo(null); $("puntero").classList.remove("si");
 }
 
@@ -360,19 +369,20 @@ async function demo(r){
   mostrarDetectada();
   await espera(3800, r);
 
-  paso(4, "Si está al tope, la app te dice cómo desbloquearla.");
+  paso(4, "Si está al tope, paga tu licencia ahí mismo con Mercado Pago.");
   dialogo("dComprar");
-  await espera(1600, r);
-  await clic($("bWa"), r);
+  await espera(1800, r);
+  await clic($("bPagar"), r);
+  $("esperando").textContent = "⏳ Esperando tu pago… deja esta ventana abierta.";
+  await espera(700, r);
+  $("dNavegador").classList.add("si");
   await espera(1500, r);
-  await clic($("bYaTengo"), r);
+  await clic($("bPagarMp"), r);
+  await espera(500, r);
+  $("aprobado").classList.add("si");
+  await espera(1400, r);
 
-  paso(5, "Pega la clave que te enviamos y actívala.");
-  dialogo("dActivar");
-  await espera(600, r);
-  for (let i = 1; i <= CLAVE.length; i++){ $("campo").textContent = CLAVE.slice(0, i); await espera(45, r); }
-  await espera(400, r);
-  await clic($("bOkActivar"), r);
+  paso(5, "La licencia se activa sola en cuanto se confirma tu pago.");
   dialogo("dOk");
   $("lic").textContent = "✅ Activa para la impresora 544E554B3138333321.";
   ["bComprar","bActivar"].forEach(b => $(b).classList.add("off"));
