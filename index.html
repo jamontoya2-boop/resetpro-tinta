@@ -151,8 +151,24 @@ section{padding:clamp(56px,9vw,104px) 0}
 .modelos{display:flex;flex-wrap:wrap;gap:6px;padding:0 0 16px}
 .modelos span{font:500 .85rem/1 Inter,sans-serif;padding:6px 9px;border-radius:8px;background:var(--blanco);border:1px solid var(--linea);font-variant-numeric:tabular-nums}
 .modelos span.match{background:#E3F7EC;border-color:var(--verde);color:#0B5E2C;font-weight:700}
-.series{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:32px 0 18px}
-.series span{font:700 1rem/1 Outfit,sans-serif;padding:12px 18px;border-radius:12px;background:var(--papel);border:1px solid var(--linea)}
+.series{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:30px auto 22px;max-width:900px}
+@media (max-width:760px){.series{grid-template-columns:repeat(2,1fr)}}
+.series div{padding:16px 14px;border-radius:14px;background:var(--papel);border:1px solid var(--linea);text-align:center}
+.series b{display:block;font:800 1.35rem/1.1 Outfit,sans-serif}
+.series span{display:block;margin-top:6px;color:var(--gris);font-size:.9rem}
+.series div:nth-child(1){border-top:4px solid var(--cian)}.series div:nth-child(2){border-top:4px solid var(--magenta)}
+.series div:nth-child(3){border-top:4px solid var(--amarillo)}.series div:nth-child(4){border-top:4px solid var(--texto)}
+.series div:nth-child(5){border-top:4px solid var(--cian)}.series div:nth-child(6){border-top:4px solid var(--magenta)}
+/* Franja «Para impresoras EPSON» (texto propio, sin el logo de Epson: es marca registrada) */
+.franja{background:var(--blanco);border-bottom:1px solid var(--linea);padding:28px 0}
+.franja .cont{display:flex;align-items:center;justify-content:center;gap:18px 28px;flex-wrap:wrap;text-align:center}
+.franja .marca{font:800 clamp(2.2rem,6vw,3.6rem)/1 Outfit,sans-serif;letter-spacing:.02em}
+.franja .marca small{display:block;font:600 .8rem/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gris);margin-bottom:8px}
+.franja .marca em{font-style:normal;letter-spacing:.06em;background:linear-gradient(90deg,var(--cian),var(--magenta) 55%,var(--amarillo));-webkit-background-clip:text;background-clip:text;color:transparent}
+.franja .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.franja .chips span{font:700 1rem/1 Outfit,sans-serif;padding:11px 16px;border-radius:999px;background:var(--papel);border:1px solid var(--linea)}
+.sello{display:inline-flex;align-items:center;gap:8px;margin:0 auto 14px;padding:9px 16px;border-radius:999px;background:#E3F7EC;border:1px solid var(--verde);color:#0B5E2C;font:700 .98rem/1.2 Outfit,sans-serif}
+
 .populares{margin-top:30px}
 .populares h3{font:700 1.1rem/1.3 Outfit,sans-serif;margin:0 0 12px}
 .populares div{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
@@ -277,12 +293,20 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
         <!-- cuerpo -->
         <rect x="40" y="96" width="340" height="150" rx="22" fill="url(#cuerpo)"/>
         <rect x="40" y="96" width="340" height="44" rx="22" fill="url(#tapa)"/>
-        <!-- tanques de tinta laterales -->
-        <rect x="350" y="150" width="54" height="86" rx="10" fill="#22324A"/>
-        <rect x="358" y="160" width="9" height="66" rx="4" fill="#0B0F16"/>
-        <rect x="370" y="176" width="9" height="50" rx="4" fill="#00A7E1"/>
-        <rect x="382" y="168" width="9" height="58" rx="4" fill="#E5197E"/>
-        <rect x="394" y="184" width="6" height="42" rx="3" fill="#FFC928"/>
+        <!-- tanques de tinta al frente, como una EcoTank -->
+        <rect x="336" y="118" width="78" height="128" rx="12" fill="#22324A" stroke="#3A4C68" stroke-width="2"/>
+        <rect x="346" y="132" width="13" height="102" rx="5" fill="#0E1624"/>
+        <rect x="363" y="132" width="13" height="102" rx="5" fill="#0E1624"/>
+        <rect x="380" y="132" width="13" height="102" rx="5" fill="#0E1624"/>
+        <rect x="397" y="132" width="11" height="102" rx="5" fill="#0E1624"/>
+        <rect x="346" y="160" width="13" height="74" rx="5" fill="#2A2F38"/>
+        <rect x="363" y="176" width="13" height="58" rx="5" fill="#00A7E1"/>
+        <rect x="380" y="168" width="13" height="66" rx="5" fill="#E5197E"/>
+        <rect x="397" y="184" width="11" height="50" rx="5" fill="#FFC928"/>
+        <rect x="346" y="160" width="4" height="74" rx="2" fill="#fff" opacity=".12"/>
+        <rect x="363" y="176" width="4" height="58" rx="2" fill="#fff" opacity=".25"/>
+        <rect x="380" y="168" width="4" height="66" rx="2" fill="#fff" opacity=".25"/>
+        <rect x="397" y="184" width="3" height="50" rx="2" fill="#fff" opacity=".3"/>
         <!-- ranura de salida -->
         <rect x="90" y="196" width="240" height="14" rx="7" fill="#0E1624"/>
         <!-- bandeja -->
@@ -299,6 +323,14 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
     </div>
   </div>
 </section>
+
+<!-- Franja de compatibilidad con la marca (solo texto: nada de logos de Epson) -->
+<div class="franja">
+  <div class="cont">
+    <div class="marca"><small>Hecho para impresoras</small><em>EPSON</em></div>
+    <div class="chips"><span>EcoTank</span><span>Serie L</span><span>Expression XP</span><span>WorkForce</span><span>Stylus</span></div>
+  </div>
+</div>
 
 <!-- Síntomas -->
 <section class="sintomas">
@@ -379,6 +411,14 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
     <span class="etiqueta">Compatibilidad</span>
     <h2>Funciona con más de 1,000 modelos Epson</h2>
     <p class="sub">Incluye las series más vendidas en México. La forma segura de saberlo es descargar la app y presionar «Buscar»: te dice al instante si tu modelo es compatible.</p>
+    <div class="series" aria-label="Series Epson compatibles">
+      <div><b>EcoTank L</b><span>205 modelos</span></div>
+      <div><b>EcoTank ET</b><span>110 modelos</span></div>
+      <div><b>Expression XP</b><span>149 modelos</span></div>
+      <div><b>WorkForce</b><span>134 modelos</span></div>
+      <div><b>Stylus y Artisan</b><span>281 modelos</span></div>
+      <div><b>Modelos de Japón</b><span>147 modelos</span></div>
+    </div>
     <div class="buscador">
       <label for="modelo">¿Está tu modelo? Escríbelo como aparece en tu impresora</label>
       <input id="modelo" type="search" placeholder="Por ejemplo: L3150, XP-2101, ET-2720" autocomplete="off" spellcheck="false">
@@ -395,6 +435,7 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
       <div><b>🔌 Cable USB</b><span>La impresora conectada directo a la computadora.</span></div>
       <div><b>⏱️ 5 minutos</b><span>Desde que descargas hasta que vuelves a imprimir.</span></div>
     </div>
+    <div class="centro"><span class="sello">✓ Compatible con más de 1,000 modelos Epson</span></div>
     <div class="acciones" style="justify-content:center">
       <a class="btn btn-prim" href="descargas/ResetPro-Tinta-Mac.zip" download onclick="setTimeout(()=>document.getElementById('instalar').scrollIntoView({behavior:'smooth'}),400)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>
