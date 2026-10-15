@@ -267,10 +267,13 @@ const escena = $("escena");
 
 // Escalar la escena 360×640 al tamaño del marco
 function ajustar(){
-  const s = Math.min(innerWidth / 360, innerHeight / 640);
-  escena.style.transform = `scale(${s})`;
+  const w = document.documentElement.clientWidth || innerWidth;
+  const h = document.documentElement.clientHeight || innerHeight;
+  escena.style.transform = `scale(${Math.min(w / 360, h / 640)})`;
 }
-addEventListener("resize", ajustar); ajustar();
+// Safari de iPad a veces da el tamaño del marco hasta después de cargar: se recalcula.
+addEventListener("resize", ajustar); addEventListener("load", ajustar); ajustar();
+setTimeout(ajustar, 300); setTimeout(ajustar, 1500);
 
 // Datos reales de la L120 de prueba (lectura de la app)
 const ANTES = [["Waste counter","24, 25","63, 24","0, 0"],["Waste counters (?)","28, 29, 46","246, 40, 104","0, 0, 94"],["Waste counter","30","0","0"]];
