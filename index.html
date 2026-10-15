@@ -6,6 +6,8 @@
 <title>ResetPro Tinta · Desbloquea tu impresora Epson</title>
 <meta name="description" content="¿Tu impresora Epson parpadea y dice que las almohadillas llegaron al final de su vida útil? ResetPro Tinta la desbloquea en minutos. Descarga la app y revisa al instante si tu impresora se puede desbloquear.">
 <link rel="canonical" href="https://resetprotinta.com/">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/icono.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ResetPro Tinta">
 <meta property="og:title" content="¿Tu impresora Epson parpadea y ya no imprime? Desbloquéala en minutos">
@@ -221,6 +223,12 @@ section{padding:clamp(56px,9vw,104px) 0}
 .ajustes .tarjeta.col div{display:flex;align-items:center;gap:8px}
 .ajustes .tarjeta.col div span{flex:1}
 .ajustes .tarjeta small{color:#6e6e73;font-size:10.5px;line-height:1.35;border-top:1px solid #E5E5EA;padding-top:6px}
+.captura{margin-top:auto;width:100%;height:auto;border-radius:12px;border:1px solid #D1D1D6;box-shadow:0 10px 24px -14px rgba(0,0,0,.45)}
+.mac.dialogo{background:#F6F6F6;border-radius:18px;padding:18px 16px 14px}
+.dialogo .app-ico{position:relative;width:56px;height:56px;margin:0 auto 4px}
+.dialogo .app-ico img{width:56px;height:56px}
+.dialogo .app-ico i{position:absolute;right:-6px;bottom:-4px;font-style:normal;font-size:20px;line-height:1}
+.dialogo .b{border-radius:999px;padding:6px 10px}
 .ajustes .b.marca{flex:none;background:#E9E9EB;border-color:#E9E9EB;font-weight:500;box-shadow:0 0 0 3px rgba(255,201,40,.95)}
 .inst-nota{margin:16px 0 0;font-size:.9rem;color:var(--gris);text-align:center}
 
@@ -462,15 +470,13 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
         <li>
           <b>Abre el archivo descargado</b>
           <span>Abre <b>ResetPro-Tinta-Mac.dmg</b> en tu carpeta de Descargas. Se abre una ventana: arrastra <b>ResetPro Tinta</b> sobre la carpeta <b>Aplicaciones</b>.</span>
-          <div class="mac centro" aria-hidden="true">
-            <div class="arrastre"><span><i>🖨️</i>ResetPro Tinta</span><em>→</em><span><i>📁</i>Aplicaciones</span></div>
-          </div>
+          <img class="captura" src="img/instalador.jpg" width="760" height="512" loading="lazy" alt="Ventana del instalador: el ícono de ResetPro Tinta, una flecha y la carpeta Aplicaciones">
         </li>
         <li>
           <b>Ábrela y presiona «Listo»</b>
           <span>Dale doble clic. macOS muestra este aviso: presiona <b>Listo</b> (no la mandes a la papelera).</span>
-          <div class="mac centro" aria-hidden="true">
-            <div class="icono">⚠️</div>
+          <div class="mac centro dialogo" aria-hidden="true">
+            <div class="app-ico"><img src="img/icono.png" alt="" width="56" height="56"><i>⚠️</i></div>
             <h4>No se abrió «ResetPro Tinta»</h4>
             <p>Apple no pudo verificar que «ResetPro Tinta» esté libre de malware…</p>
             <div class="botones"><span class="b">Trasladar a la papelera</span><span class="b si">Listo</span></div>
@@ -494,9 +500,10 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
         <li>
           <b>Confirma y listo</b>
           <span>Presiona <b>Abrir</b> y escribe la contraseña de tu Mac (o usa Touch ID). Desde ahora se abre normal, con doble clic.</span>
-          <div class="mac centro" aria-hidden="true">
-            <div class="icono">🔓</div>
+          <div class="mac centro dialogo" aria-hidden="true">
+            <div class="app-ico"><img src="img/icono.png" alt="" width="56" height="56"></div>
             <h4>¿Abrir «ResetPro Tinta»?</h4>
+            <p>Escribe tu contraseña o usa Touch ID para permitirlo.</p>
             <div class="botones"><span class="b">Cancelar</span><span class="b si">Abrir</span></div>
           </div>
         </li>
