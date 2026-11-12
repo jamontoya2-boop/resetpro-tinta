@@ -415,12 +415,16 @@ fieldset.pregunta{min-width:0}
   var q = new URLSearchParams(location.search);
   if (q.get("m")) f.modelo.value = q.get("m").slice(0, 40);
   if (q.get("s")) f.serie.value = q.get("s").slice(0, 32);
+  // ?e=1..5: las estrellas que tocó en el correo
+  var e = Number(q.get("e"));
+  if (e >= 1 && e <= 5) f.querySelector('input[name=estrellas][value="' + e + '"]').checked = true;
 
   var estrellas = document.querySelectorAll("#estrellas label");
   function pintar() {
     var v = Number((f.querySelector("input[name=estrellas]:checked") || {}).value || 0);
     estrellas.forEach(function (l, i) { l.classList.toggle("on", i < v); });
   }
+  pintar();
   f.addEventListener("change", function () {
     pintar();
     var r = (f.querySelector("input[name=resultado]:checked") || {}).value;
