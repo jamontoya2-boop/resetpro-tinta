@@ -46,29 +46,16 @@ body{background:var(--fondo);overflow:hidden;font-family:var(--mac);color:var(--
 .capa{position:absolute;left:0;right:0;top:150px;height:440px;transition:opacity .45s,transform .45s}
 .capa.oculta{opacity:0;transform:translateY(12px);pointer-events:none}
 
-/* ---------- Impresora EcoTank ---------- */
-.impresora{position:absolute;left:40px;top:70px;width:280px;height:200px}
-.papel-entra{position:absolute;left:62px;top:0;width:120px;height:46px;background:#F7F7F2;border-radius:3px 3px 0 0;
-  box-shadow:inset 0 -6px 8px rgba(0,0,0,.08)}
-.cuerpo{position:absolute;left:0;top:34px;width:240px;height:120px;background:linear-gradient(#2B3442,#1E2531);border-radius:14px;
-  box-shadow:0 18px 30px -12px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08)}
-.tapa{position:absolute;left:14px;top:12px;width:212px;height:22px;border-radius:6px;background:#343E4E}
-.panel{position:absolute;left:18px;top:52px;display:flex;gap:12px;align-items:center}
-.led{width:9px;height:9px;border-radius:50%;background:#3A4454}
-.led.naranja{background:var(--naranja);box-shadow:0 0 10px var(--naranja)}
-.led.verde{background:var(--verde);box-shadow:0 0 10px var(--verde)}
+/* ---------- Impresora EcoTank (SVG) ---------- */
+.impresora{position:absolute;left:14px;right:14px;top:40px}
+.imp-demo{width:100%;height:auto;display:block;filter:drop-shadow(0 22px 30px rgba(0,0,0,.5));overflow:visible}
+.impresora .led{fill:#3A4454}
+.impresora .led.naranja{fill:var(--naranja);filter:drop-shadow(0 0 6px var(--naranja))}
 .bloqueada .led.a{animation:parpadeo 1s steps(1) infinite}
 .bloqueada .led.b{animation:parpadeo 1s steps(1) infinite .5s}
-@keyframes parpadeo{50%{background:#3A4454;box-shadow:none}}
-.etq{font:600 8px/1 var(--mac);color:#8592A6;letter-spacing:.08em}
-.bandeja{position:absolute;left:46px;top:126px;width:150px;height:14px;background:#151B25;border-radius:0 0 8px 8px}
-.hoja{position:absolute;left:58px;top:122px;width:126px;height:0;background:#FBFBF8;border-radius:0 0 3px 3px;overflow:hidden;
-  transition:height 2.4s ease-out}
-.hoja.sale{height:84px}
-.hoja b{display:block;height:5px;margin:9px 12px 0;border-radius:2px}
-.tanques{position:absolute;left:244px;top:46px;display:flex;gap:3px}
-.tanque{width:8px;height:96px;border-radius:3px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}
-.tanque::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--n);background:var(--c)}
+@keyframes parpadeo{50%{fill:#3A4454;filter:none}}
+.hoja{transition:transform 2.4s ease-out}
+.hoja.sale{transform:translateY(104px)}
 .globo{position:absolute;left:24px;right:24px;top:300px;padding:12px 14px;border-radius:12px;font:600 13px/1.35 var(--mac);text-align:center}
 .globo.mal{background:rgba(229,55,43,.14);color:#FFB4AE;border:1px solid rgba(229,55,43,.4)}
 .globo.bien{background:rgba(20,164,77,.14);color:#9BE7B8;border:1px solid rgba(20,164,77,.45)}
@@ -159,27 +146,58 @@ legend{font-size:9.5px;color:var(--ven-gris);padding:0 3px}
   <!-- Impresora -->
   <div class="capa" id="capaImpresora">
     <div class="impresora bloqueada" id="impresora">
-      <div class="papel-entra"></div>
-      <div class="cuerpo">
-        <div class="tapa"></div>
-        <div class="panel">
-          <span class="led verde"></span><span class="etq">ON</span>
-          <span class="led naranja a"></span><span class="etq">TINTA</span>
-          <span class="led naranja b"></span><span class="etq">PAPEL</span>
-        </div>
-      </div>
-      <div class="bandeja"></div>
-      <div class="hoja" id="hoja">
-        <b style="background:var(--cian);width:70%"></b><b style="background:var(--magenta);width:55%"></b>
-        <b style="background:var(--amarillo);width:80%"></b><b style="background:var(--negro);width:62%"></b>
-        <b style="background:var(--negro);width:74%"></b>
-      </div>
-      <div class="tanques">
-        <span class="tanque" style="--c:var(--negro);--n:70%"></span>
-        <span class="tanque" style="--c:var(--cian);--n:62%"></span>
-        <span class="tanque" style="--c:var(--magenta);--n:55%"></span>
-        <span class="tanque" style="--c:var(--amarillo);--n:66%"></span>
-      </div>
+      <svg class="imp-demo" viewBox="0 0 460 330" aria-hidden="true">
+  <defs>
+    <linearGradient id="dpc" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2F3A4C"/><stop offset="1" stop-color="#151C28"/></linearGradient>
+    <linearGradient id="dpt" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#404D63"/><stop offset="1" stop-color="#2B3546"/></linearGradient>
+    <linearGradient id="dpb" x1="0" x2="1"><stop offset="0" stop-color="#5FD4FF" stop-opacity="0"/><stop offset=".5" stop-color="#5FD4FF" stop-opacity=".55"/><stop offset="1" stop-color="#5FD4FF" stop-opacity="0"/></linearGradient>
+    <clipPath id="dps"><rect x="60" y="226" width="280" height="110"/></clipPath>
+    <clipPath id="dpk"><rect x="24" y="92" width="412" height="196" rx="20"/></clipPath>
+  </defs>
+  <ellipse cx="230" cy="314" rx="205" ry="12" fill="#000" opacity=".32"/>
+  <!-- soporte trasero con hojas -->
+  <path d="M148 100 160 30h140l12 70z" fill="#1C2533"/>
+  <rect x="172" y="16" width="116" height="82" rx="3" fill="#EEF2F7"/>
+  <rect x="186" y="30" width="70" height="5" rx="2.5" fill="#CBD4E1"/><rect x="186" y="42" width="88" height="5" rx="2.5" fill="#CBD4E1"/>
+  <!-- cuerpo y tapa del escáner -->
+  <rect x="24" y="92" width="412" height="196" rx="20" fill="url(#dpc)"/>
+  <rect x="24" y="92" width="412" height="48" rx="20" fill="url(#dpt)"/>
+  <rect x="24" y="118" width="412" height="22" fill="url(#dpt)"/>
+  <rect x="44" y="96" width="372" height="2" rx="1" fill="#fff" opacity=".09"/>
+  <rect x="24" y="139" width="412" height="3" fill="#0A0F18" opacity=".85"/>
+  <!-- panel: encendido, papel y tinta -->
+  <rect x="42" y="152" width="156" height="40" rx="20" fill="#0B1019" stroke="#2C384C"/>
+  <circle cx="64" cy="172" r="10" fill="#18202D" stroke="#62E08F" stroke-width="2.2"/>
+  <path d="M64 166.5v5M60.6 169a5 5 0 1 0 6.8 0" fill="none" stroke="#62E08F" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="104" cy="172" r="6" fill="#3A4454"/><circle cx="148" cy="172" r="6" fill="#3A4454"/>
+  <g class="panel">
+    <circle class="led naranja a" cx="104" cy="172" r="6"/>
+    <circle class="led naranja b" cx="148" cy="172" r="6"/>
+  </g>
+  <path d="M115 166h7l3 3v9h-10z" fill="none" stroke="#8592A6" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M163 165c3 4 4.5 6.3 4.5 8.2a4.5 4.5 0 0 1-9 0c0-1.9 1.5-4.2 4.5-8.2z" fill="none" stroke="#8592A6" stroke-width="1.5"/>
+  <text x="64" y="210" text-anchor="middle" font-family="Outfit,system-ui,sans-serif" font-size="10" font-weight="700" letter-spacing="1" fill="#7F8CA0">ON</text>
+  <text x="110" y="210" text-anchor="middle" font-family="Outfit,system-ui,sans-serif" font-size="10" font-weight="700" letter-spacing="1" fill="#7F8CA0">PAPEL</text>
+  <text x="154" y="210" text-anchor="middle" font-family="Outfit,system-ui,sans-serif" font-size="10" font-weight="700" letter-spacing="1" fill="#7F8CA0">TINTA</text>
+  <!-- tanques de tinta al frente -->
+  <rect x="330" y="150" width="92" height="126" rx="12" fill="#192130" stroke="#34415A"/>
+  <rect x="341" y="157" width="13" height="8" rx="3" fill="#30353F" opacity=".85"/><rect x="341" y="170" width="13" height="94" rx="5" fill="#070B12"/><rect x="341" y="196" width="13" height="68" rx="5" fill="#30353F"/><rect x="343" y="199" width="3" height="62" rx="1.5" fill="#fff" opacity=".22"/><rect x="341" y="180" width="13" height="1" fill="#fff" opacity=".18"/><rect x="341" y="254" width="13" height="1" fill="#fff" opacity=".18"/><rect x="361" y="157" width="13" height="8" rx="3" fill="#00A7E1" opacity=".85"/><rect x="361" y="170" width="13" height="94" rx="5" fill="#070B12"/><rect x="361" y="209" width="13" height="55" rx="5" fill="#00A7E1"/><rect x="363" y="212" width="3" height="49" rx="1.5" fill="#fff" opacity=".22"/><rect x="361" y="180" width="13" height="1" fill="#fff" opacity=".18"/><rect x="361" y="254" width="13" height="1" fill="#fff" opacity=".18"/><rect x="381" y="157" width="13" height="8" rx="3" fill="#E5197E" opacity=".85"/><rect x="381" y="170" width="13" height="94" rx="5" fill="#070B12"/><rect x="381" y="202" width="13" height="62" rx="5" fill="#E5197E"/><rect x="383" y="205" width="3" height="56" rx="1.5" fill="#fff" opacity=".22"/><rect x="381" y="180" width="13" height="1" fill="#fff" opacity=".18"/><rect x="381" y="254" width="13" height="1" fill="#fff" opacity=".18"/><rect x="401" y="157" width="13" height="8" rx="3" fill="#FFC928" opacity=".85"/><rect x="401" y="170" width="13" height="94" rx="5" fill="#070B12"/><rect x="401" y="217" width="13" height="47" rx="5" fill="#FFC928"/><rect x="403" y="220" width="3" height="41" rx="1.5" fill="#fff" opacity=".22"/><rect x="401" y="180" width="13" height="1" fill="#fff" opacity=".18"/><rect x="401" y="254" width="13" height="1" fill="#fff" opacity=".18"/>
+  <!-- salida y bandeja -->
+  <rect x="74" y="220" width="236" height="11" rx="5.5" fill="#05080D"/>
+  <path d="M86 236h212l22 46H64z" fill="#253042"/>
+  <path d="M64 282h256" stroke="#3A4860" stroke-width="2"/>
+  <!-- hoja impresa -->
+  <g clip-path="url(#dps)"><g class="hoja" id="hoja">
+    <rect x="104" y="124" width="176" height="100" rx="3" fill="#FBFBF8"/>
+    <rect x="120" y="140" width="110" height="7" rx="3" fill="#00A7E1"/>
+    <rect x="120" y="155" width="140" height="7" rx="3" fill="#E5197E"/>
+    <rect x="120" y="170" width="92" height="7" rx="3" fill="#FFC928"/>
+    <rect x="120" y="185" width="128" height="7" rx="3" fill="#30353F"/>
+    <rect x="120" y="200" width="104" height="7" rx="3" fill="#30353F"/>
+  </g></g>
+  <!-- barrido del reset -->
+  <g clip-path="url(#dpk)"><rect class="barrido" x="-90" y="92" width="90" height="196" fill="url(#dpb)" opacity="0"/></g>
+</svg>
     </div>
     <div class="globo mal" id="globo">Almohadillas llenas: la impresora se detiene aunque tenga tinta.</div>
   </div>

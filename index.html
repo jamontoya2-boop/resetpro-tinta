@@ -274,6 +274,71 @@ section{padding:clamp(56px,9vw,104px) 0}
 .dialogo .alerta{font-size:40px;line-height:1;margin:0 auto 6px}
 .mac .b.azul{background:#0A84FF;border-color:#0A84FF;color:#fff}
 .mac .b.anillo{box-shadow:0 0 0 3px rgba(255,201,40,.95);font-weight:600}
+/* Garantías bajo la portada */
+.garantias{background:var(--blanco);border-bottom:1px solid var(--linea);padding:22px 0}
+.garantias .cont{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media (max-width:960px){.garantias .cont{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.garantias .cont{grid-template-columns:1fr;gap:12px}}
+.garantias .g{display:flex;gap:12px;align-items:flex-start}
+.garantias .gi{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff)}
+.garantias .gi svg{width:22px;height:22px}
+.garantias p{margin:0;font-size:.88rem;color:var(--gris);line-height:1.4}
+.garantias p b{display:block;color:var(--texto);font:700 1rem/1.3 Outfit,sans-serif}
+.garantias a{color:inherit}
+/* Pasos con ícono y etiqueta */
+.pasos li{display:flex;flex-direction:column}
+.pasos li .pi{position:absolute;top:24px;right:22px;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff)}
+.pasos li .pi svg{width:22px;height:22px}
+.pasos li .chip-paso{margin-top:auto;align-self:flex-start;transform:translateY(10px);font:700 .78rem/1 Outfit,sans-serif;padding:7px 11px;border-radius:999px;color:var(--c);background:color-mix(in srgb,var(--c) 10%,#fff);border:1px solid color-mix(in srgb,var(--c) 30%,#fff)}
+.pasos li p{margin-bottom:18px}
+/* Comparación de opciones */
+.opciones{padding:clamp(56px,8vw,96px) 0;background:var(--blanco)}
+.op-rejilla{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px;align-items:stretch}
+@media (max-width:960px){.op-rejilla{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.op-rejilla{grid-template-columns:1fr}}
+.op{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio);padding:24px 22px;display:flex;flex-direction:column;gap:12px}
+.op h3{font-size:1.1rem;margin:0}
+.op .em{font-size:1.6rem;line-height:1}
+.op ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:.93rem;color:var(--gris)}
+.op li{padding-left:24px;position:relative}
+.op li::before{content:"✕";position:absolute;left:0;top:0;color:var(--rojo);font-weight:800}
+.op.si{background:var(--tinta);color:#fff;border-color:var(--tinta);position:relative;box-shadow:0 24px 50px -24px rgba(14,26,43,.7)}
+.op.si h3{color:#fff}
+.op.si ul{color:#C5D1E2}
+.op.si li::before{content:"✓";color:#7CE29A}
+.op.si .btn{margin-top:auto;justify-content:center}
+.op-tag{position:absolute;top:-12px;left:22px;background:linear-gradient(90deg,var(--cian),var(--magenta));color:#fff;font:700 .75rem/1 Outfit,sans-serif;padding:7px 11px;border-radius:999px}
+@media (max-width:560px){.op.si{order:-1;margin-top:10px}}
+/* Botón fijo en celular */
+.cta-fija{display:none}
+@media (max-width:760px){
+  .cta-fija{display:flex;align-items:center;justify-content:center;gap:8px;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:60;padding:15px 18px;border-radius:999px;background:var(--magenta);color:#fff;font:700 1rem/1 Outfit,sans-serif;text-decoration:none;box-shadow:0 14px 30px -8px rgba(229,25,126,.65);transform:translateY(160%);transition:transform .3s ease}
+  .cta-fija svg{width:20px;height:20px}
+  .cta-fija.ver{transform:none}
+  footer{padding-bottom:96px}
+}
+@media (prefers-reduced-motion:reduce){.cta-fija{transition:none}}
+/* Impresora EcoTank animada de la portada (ciclo de 10 s) */
+.imp{width:100%;height:auto;filter:drop-shadow(0 30px 40px rgba(0,0,0,.45));overflow:visible}
+.imp .led{fill:#FF9F1A;filter:drop-shadow(0 0 6px #FF9F1A)}
+.anim .err{animation:i-err 10s infinite}
+.anim .led.a{animation:i-parp 1s steps(1) infinite}
+.anim .led.b{animation:i-parp 1s steps(1) infinite .5s}
+.anim .barrido{animation:i-barr 10s infinite}
+.anim .hoja-h{animation:i-hoja 10s infinite}
+@keyframes i-err{0%,42%{opacity:1}45%,100%{opacity:0}}
+@keyframes i-parp{50%{opacity:.12}}
+@keyframes i-barr{0%,44%{transform:translateX(0);opacity:0}47%{opacity:1}59%{transform:translateX(560px);opacity:1}61%,100%{transform:translateX(560px);opacity:0}}
+@keyframes i-hoja{0%,62%{transform:translateY(0);opacity:1}82%,94%{transform:translateY(104px);opacity:1}99%{transform:translateY(104px);opacity:0}100%{transform:translateY(0);opacity:0}}
+.globo.medio{background:var(--cian);box-shadow:0 12px 30px -8px rgba(0,167,225,.6)}
+.globo.bien{background:var(--verde);box-shadow:0 12px 30px -8px rgba(20,164,77,.6)}
+.ilus .globo.mal{animation:i-g1 10s infinite}
+.ilus .globo.medio{animation:i-g2 10s infinite;opacity:0}
+.ilus .globo.bien{animation:i-g3 10s infinite;opacity:0}
+@keyframes i-g1{0%,42%{opacity:1;transform:none}46%,100%{opacity:0;transform:translateY(-6px)}}
+@keyframes i-g2{0%,43%{opacity:0;transform:translateY(6px)}47%,57%{opacity:1;transform:none}61%,100%{opacity:0;transform:translateY(-6px)}}
+@keyframes i-g3{0%,59%{opacity:0;transform:translateY(6px)}63%,95%{opacity:1;transform:none}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.anim *,.ilus .globo{animation:none!important}.ilus .globo.medio,.ilus .globo.bien{display:none}}
 /* Dibujos de las pantallas de Windows */
 .win{margin-top:auto;background:#fff;border:1px solid #D0D0D0;border-radius:8px;font:12.5px/1.4 "Segoe UI",system-ui,sans-serif;color:#1a1a1a;box-shadow:0 8px 20px -12px rgba(0,0,0,.35);overflow:hidden;text-align:left}
 .win .b{display:inline-block;padding:6px 14px;border-radius:4px;border:1px solid #C8C8C8;background:#FBFBFB;font-size:12px}
@@ -369,49 +434,78 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
     </div>
 
     <div class="ilus" aria-hidden="true">
-      <div class="globo">Las almohadillas de tinta llegaron al final de su vida útil</div>
-      <svg viewBox="0 0 420 340">
-        <defs>
-          <linearGradient id="cuerpo" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2B3A52"/><stop offset="1" stop-color="#1A2638"/></linearGradient>
-          <linearGradient id="tapa" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3A4C68"/><stop offset="1" stop-color="#2B3A52"/></linearGradient>
-        </defs>
-        <!-- hoja trasera -->
-        <rect x="120" y="22" width="180" height="90" rx="4" fill="#E9EEF5"/>
-        <rect x="140" y="42" width="110" height="7" rx="3" fill="#C9D3E1"/>
-        <rect x="140" y="58" width="140" height="7" rx="3" fill="#C9D3E1"/>
-        <!-- cuerpo -->
-        <rect x="40" y="96" width="340" height="150" rx="22" fill="url(#cuerpo)"/>
-        <rect x="40" y="96" width="340" height="44" rx="22" fill="url(#tapa)"/>
-        <!-- tanques de tinta al frente, como una EcoTank -->
-        <rect x="336" y="118" width="78" height="128" rx="12" fill="#22324A" stroke="#3A4C68" stroke-width="2"/>
-        <rect x="346" y="132" width="13" height="102" rx="5" fill="#0E1624"/>
-        <rect x="363" y="132" width="13" height="102" rx="5" fill="#0E1624"/>
-        <rect x="380" y="132" width="13" height="102" rx="5" fill="#0E1624"/>
-        <rect x="397" y="132" width="11" height="102" rx="5" fill="#0E1624"/>
-        <rect x="346" y="160" width="13" height="74" rx="5" fill="#2A2F38"/>
-        <rect x="363" y="176" width="13" height="58" rx="5" fill="#00A7E1"/>
-        <rect x="380" y="168" width="13" height="66" rx="5" fill="#E5197E"/>
-        <rect x="397" y="184" width="11" height="50" rx="5" fill="#FFC928"/>
-        <rect x="346" y="160" width="4" height="74" rx="2" fill="#fff" opacity=".12"/>
-        <rect x="363" y="176" width="4" height="58" rx="2" fill="#fff" opacity=".25"/>
-        <rect x="380" y="168" width="4" height="66" rx="2" fill="#fff" opacity=".25"/>
-        <rect x="397" y="184" width="3" height="50" rx="2" fill="#fff" opacity=".3"/>
-        <!-- ranura de salida -->
-        <rect x="90" y="196" width="240" height="14" rx="7" fill="#0E1624"/>
-        <!-- bandeja -->
-        <path d="M80 236h260l22 40H58z" fill="#3A4C68"/>
-        <!-- panel con luces -->
-        <rect x="64" y="150" width="120" height="30" rx="15" fill="#0E1624"/>
-        <circle cx="86" cy="165" r="7" fill="#7CE29A"/>
-        <circle class="led" cx="112" cy="165" r="7" fill="#FF8A1F"/>
-        <circle class="led b" cx="138" cy="165" r="7" fill="#E5372B"/>
-        <circle cx="164" cy="165" r="7" fill="#3D4A5E"/>
-        <!-- sombra -->
-        <ellipse cx="210" cy="300" rx="170" ry="14" fill="#000" opacity=".25"/>
-      </svg>
+      <div class="globo mal">Las almohadillas de tinta llegaron al final de su vida útil</div>
+      <div class="globo medio">Reseteando el contador…</div>
+      <div class="globo bien">✓ Contador en cero: imprime otra vez</div>
+      <svg class="imp anim" viewBox="0 0 460 330" aria-hidden="true">
+  <defs>
+    <linearGradient id="ipc" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2F3A4C"/><stop offset="1" stop-color="#151C28"/></linearGradient>
+    <linearGradient id="ipt" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#404D63"/><stop offset="1" stop-color="#2B3546"/></linearGradient>
+    <linearGradient id="ipb" x1="0" x2="1"><stop offset="0" stop-color="#5FD4FF" stop-opacity="0"/><stop offset=".5" stop-color="#5FD4FF" stop-opacity=".55"/><stop offset="1" stop-color="#5FD4FF" stop-opacity="0"/></linearGradient>
+    <clipPath id="ips"><rect x="60" y="226" width="280" height="110"/></clipPath>
+    <clipPath id="ipk"><rect x="24" y="92" width="412" height="196" rx="20"/></clipPath>
+  </defs>
+  <ellipse cx="230" cy="314" rx="205" ry="12" fill="#000" opacity=".32"/>
+  <!-- soporte trasero con hojas -->
+  <path d="M148 100 160 30h140l12 70z" fill="#1C2533"/>
+  <rect x="172" y="16" width="116" height="82" rx="3" fill="#EEF2F7"/>
+  <rect x="186" y="30" width="70" height="5" rx="2.5" fill="#CBD4E1"/><rect x="186" y="42" width="88" height="5" rx="2.5" fill="#CBD4E1"/>
+  <!-- cuerpo y tapa del escáner -->
+  <rect x="24" y="92" width="412" height="196" rx="20" fill="url(#ipc)"/>
+  <rect x="24" y="92" width="412" height="48" rx="20" fill="url(#ipt)"/>
+  <rect x="24" y="118" width="412" height="22" fill="url(#ipt)"/>
+  <rect x="44" y="96" width="372" height="2" rx="1" fill="#fff" opacity=".09"/>
+  <rect x="24" y="139" width="412" height="3" fill="#0A0F18" opacity=".85"/>
+  <!-- panel: encendido, papel y tinta -->
+  <rect x="42" y="152" width="156" height="40" rx="20" fill="#0B1019" stroke="#2C384C"/>
+  <circle cx="64" cy="172" r="10" fill="#18202D" stroke="#62E08F" stroke-width="2.2"/>
+  <path d="M64 166.5v5M60.6 169a5 5 0 1 0 6.8 0" fill="none" stroke="#62E08F" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="104" cy="172" r="6" fill="#3A4454"/><circle cx="148" cy="172" r="6" fill="#3A4454"/>
+  <g class="err">
+    <circle class="led naranja a" cx="104" cy="172" r="6"/>
+    <circle class="led naranja b" cx="148" cy="172" r="6"/>
+  </g>
+  <path d="M115 166h7l3 3v9h-10z" fill="none" stroke="#8592A6" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M163 165c3 4 4.5 6.3 4.5 8.2a4.5 4.5 0 0 1-9 0c0-1.9 1.5-4.2 4.5-8.2z" fill="none" stroke="#8592A6" stroke-width="1.5"/>
+  <text x="64" y="210" text-anchor="middle" font-family="Outfit,system-ui,sans-serif" font-size="10" font-weight="700" letter-spacing="1" fill="#7F8CA0">ON</text>
+  <text x="110" y="210" text-anchor="middle" font-family="Outfit,system-ui,sans-serif" font-size="10" font-weight="700" letter-spacing="1" fill="#7F8CA0">PAPEL</text>
+  <text x="154" y="210" text-anchor="middle" font-family="Outfit,system-ui,sans-serif" font-size="10" font-weight="700" letter-spacing="1" fill="#7F8CA0">TINTA</text>
+  <!-- tanques de tinta al frente -->
+  <rect x="330" y="150" width="92" height="126" rx="12" fill="#192130" stroke="#34415A"/>
+  <rect x="341" y="157" width="13" height="8" rx="3" fill="#30353F" opacity=".85"/><rect x="341" y="170" width="13" height="94" rx="5" fill="#070B12"/><rect x="341" y="196" width="13" height="68" rx="5" fill="#30353F"/><rect x="343" y="199" width="3" height="62" rx="1.5" fill="#fff" opacity=".22"/><rect x="341" y="180" width="13" height="1" fill="#fff" opacity=".18"/><rect x="341" y="254" width="13" height="1" fill="#fff" opacity=".18"/><rect x="361" y="157" width="13" height="8" rx="3" fill="#00A7E1" opacity=".85"/><rect x="361" y="170" width="13" height="94" rx="5" fill="#070B12"/><rect x="361" y="209" width="13" height="55" rx="5" fill="#00A7E1"/><rect x="363" y="212" width="3" height="49" rx="1.5" fill="#fff" opacity=".22"/><rect x="361" y="180" width="13" height="1" fill="#fff" opacity=".18"/><rect x="361" y="254" width="13" height="1" fill="#fff" opacity=".18"/><rect x="381" y="157" width="13" height="8" rx="3" fill="#E5197E" opacity=".85"/><rect x="381" y="170" width="13" height="94" rx="5" fill="#070B12"/><rect x="381" y="202" width="13" height="62" rx="5" fill="#E5197E"/><rect x="383" y="205" width="3" height="56" rx="1.5" fill="#fff" opacity=".22"/><rect x="381" y="180" width="13" height="1" fill="#fff" opacity=".18"/><rect x="381" y="254" width="13" height="1" fill="#fff" opacity=".18"/><rect x="401" y="157" width="13" height="8" rx="3" fill="#FFC928" opacity=".85"/><rect x="401" y="170" width="13" height="94" rx="5" fill="#070B12"/><rect x="401" y="217" width="13" height="47" rx="5" fill="#FFC928"/><rect x="403" y="220" width="3" height="41" rx="1.5" fill="#fff" opacity=".22"/><rect x="401" y="180" width="13" height="1" fill="#fff" opacity=".18"/><rect x="401" y="254" width="13" height="1" fill="#fff" opacity=".18"/>
+  <!-- salida y bandeja -->
+  <rect x="74" y="220" width="236" height="11" rx="5.5" fill="#05080D"/>
+  <path d="M86 236h212l22 46H64z" fill="#253042"/>
+  <path d="M64 282h256" stroke="#3A4860" stroke-width="2"/>
+  <!-- hoja impresa -->
+  <g clip-path="url(#ips)"><g class="hoja-h">
+    <rect x="104" y="124" width="176" height="100" rx="3" fill="#FBFBF8"/>
+    <rect x="120" y="140" width="110" height="7" rx="3" fill="#00A7E1"/>
+    <rect x="120" y="155" width="140" height="7" rx="3" fill="#E5197E"/>
+    <rect x="120" y="170" width="92" height="7" rx="3" fill="#FFC928"/>
+    <rect x="120" y="185" width="128" height="7" rx="3" fill="#30353F"/>
+    <rect x="120" y="200" width="104" height="7" rx="3" fill="#30353F"/>
+  </g></g>
+  <!-- barrido del reset -->
+  <g clip-path="url(#ipk)"><rect class="barrido" x="-90" y="92" width="90" height="196" fill="url(#ipb)" opacity="0"/></g>
+</svg>
     </div>
   </div>
 </section>
+
+<!-- Garantías -->
+<div class="garantias">
+  <div class="cont">
+    <div class="g"><span class="gi" style="--c:var(--verde)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <p><b>Devolución del 100 %</b>Si no logras el reset, te devolvemos tu dinero dentro de 15 días. <a href="/terminos/">Ver términos</a></p></div>
+    <div class="g"><span class="gi" style="--c:var(--cian)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+      <p><b>Pago seguro</b>Con Mercado Pago: tarjeta, OXXO o saldo. Nunca vemos los datos de tu tarjeta.</p></div>
+    <div class="g"><span class="gi" style="--c:var(--magenta)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.2 8.4a4.1 4.1 0 1 1 0 7.2c-2.2-1.2-3.9-3.6-6.2-3.6s-4 2.4-6.2 3.6a4.1 4.1 0 1 1 0-7.2C8 9.6 9.7 12 12 12s4-2.4 6.2-3.6z"/></svg></span>
+      <p><b>Licencia perpetua</b>Pagas una vez y reseteas esa impresora todas las veces que lo necesites.</p></div>
+    <div class="g"><span class="gi" style="--c:#C79100"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="m8 11 2 2 4-4"/></svg></span>
+      <p><b>Revisas gratis</b>La app te dice si tu impresora se puede resetear antes de pagar nada.</p></div>
+  </div>
+</div>
 
 <!-- Franja de compatibilidad con la marca (solo texto: nada de logos de Epson) -->
 <div class="franja">
@@ -460,21 +554,33 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
       <p class="sub">La app te dice en segundos si tu impresora llegó al tope y si se puede desbloquear.</p>
     </div>
     <ol>
-      <li>
+      <li style="--c:var(--cian)">
+        <span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg></span>
         <h3>Descarga la app</h3>
         <p>Instala ResetPro Tinta y conecta tu impresora con el cable USB.</p>
+      
+        <span class="chip-paso">Gratis · Windows y Mac</span>
       </li>
-      <li>
+      <li style="--c:#C79100">
+        <span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
         <h3>Revisa tu impresora</h3>
         <p>Presiona «Buscar». La app detecta el modelo y te muestra en qué número van sus contadores.</p>
+      
+        <span class="chip-paso">Gratis</span>
       </li>
-      <li>
+      <li style="--c:var(--magenta)">
+        <span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14.5 8.5l2 2"/></svg></span>
         <h3>Activa tu licencia</h3>
         <p>Si tu impresora está al tope, pagas ahí mismo con Mercado Pago: tarjeta, OXXO o saldo. La licencia se activa sola y es <b>perpetua</b>: sirve para esa impresora todas las veces que la necesites.</p>
+      
+        <span class="chip-paso">Pago único</span>
       </li>
-      <li>
+      <li style="--c:var(--verde)">
+        <span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
         <h3>Resetea</h3>
         <p>Presionas «Resetear», apagas y prendes la impresora. ¡Listo, vuelve a imprimir!</p>
+      
+        <span class="chip-paso">En 1 minuto</span>
       </li>
     </ol>
   </div>
@@ -490,6 +596,28 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
       <!-- Para un video real: cambia el iframe por
            <video src="video/demo.mp4" controls playsinline preload="metadata" poster="video/portada.jpg"></video> -->
       <iframe src="demo.html?v=1.2.3" title="Demostración animada de ResetPro Tinta" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Comparación -->
+<section class="opciones">
+  <div class="cont">
+    <div class="centro">
+      <span class="etiqueta">Compara</span>
+      <h2>¿Qué opciones tienes?</h2>
+      <p class="sub">Cuando tu impresora se bloquea por las almohadillas, esto es lo que puedes hacer.</p>
+    </div>
+    <div class="op-rejilla">
+      <div class="op"><span class="em">🏪</span><h3>Llevarla a servicio</h3>
+        <ul><li>Días sin impresora</li><li>Vuelves a pagar cada vez que el contador se llena</li></ul></div>
+      <div class="op"><span class="em">🔑</span><h3>Programas con clave por reset</h3>
+        <ul><li>Compras una clave nueva en cada reset</li><li>Muchos sitios «gratis» traen programas no deseados</li></ul></div>
+      <div class="op"><span class="em">🗑️</span><h3>Comprar otra impresora</h3>
+        <ul><li>Gastas en una impresora nueva</li><li>Tiras una que funcionaba bien</li></ul></div>
+      <div class="op si"><span class="op-tag">La opción más práctica</span><h3>ResetPro Tinta</h3>
+        <ul><li>Revisas gratis antes de pagar</li><li>Pago único, resets ilimitados para tu impresora</li><li>Desde tu casa, en minutos</li><li>Respaldo automático antes del reset</li><li>Devolución si no funciona</li></ul>
+        <a class="btn btn-prim" href="#descargar">Revisa tu impresora</a></div>
     </div>
   </div>
 </section>
@@ -753,6 +881,17 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
 </section>
 
 </main>
+<a class="cta-fija" id="cta-fija" href="#descargar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>Revisa tu impresora gratis</a>
+<script>
+(function () {
+  var b = document.getElementById("cta-fija"), arriba = true, abajo = false;
+  if (!("IntersectionObserver" in window)) return;
+  function pintar() { b.classList.toggle("ver", !arriba && !abajo); }
+  new IntersectionObserver(function (e) { arriba = e[0].isIntersecting; pintar(); }).observe(document.querySelector(".portada"));
+  var d = document.getElementById("descargar");
+  if (d) new IntersectionObserver(function (e) { abajo = e[0].isIntersecting; pintar(); }).observe(d);
+})();
+</script>
 
 <footer>
   <div class="cont">
