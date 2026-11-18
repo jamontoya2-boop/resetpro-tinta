@@ -247,6 +247,26 @@ section{padding:clamp(56px,9vw,104px) 0}
 .pestanas button[aria-selected=true]{background:var(--tinta);color:#fff}
 .guia[hidden]{display:none}
 .guia>p{color:var(--gris);text-align:center;margin:0 auto 22px;max-width:620px}
+/* Guía de Mac: macOS 13+ o macOS 12 y anteriores */
+.versiones{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin:-8px auto 8px}
+.versiones button{border:1px solid var(--linea);background:var(--papel);padding:7px 14px;border-radius:999px;font:600 .85rem/1.2 Inter,sans-serif;color:var(--gris);cursor:pointer}
+.versiones button[aria-selected=true]{border-color:var(--tinta);color:var(--tinta);box-shadow:inset 0 0 0 1px var(--tinta)}
+.cual-mac{text-align:center;color:var(--gris);font-size:.85rem;margin:0 0 20px}
+.ver-mac[hidden]{display:none}
+.mac.menu{background:transparent;border:0;box-shadow:none;padding:0;display:flex;align-items:flex-start;gap:10px;justify-content:center}
+.menu .archivo{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;padding-top:6px}
+.menu .archivo img{width:48px;height:48px;border-radius:10px;background:rgba(10,132,255,.18);padding:3px}
+.menu .archivo b{font:600 11px/1.2 -apple-system,system-ui,sans-serif;background:#0A84FF;color:#fff;border-radius:4px;padding:1px 5px}
+.menu ul{list-style:none;margin:0;padding:5px;background:rgba(246,246,246,.98);border:1px solid #CFCFCF;border-radius:8px;box-shadow:0 10px 24px -10px rgba(0,0,0,.45);min-width:170px;text-align:left}
+.menu li{all:unset;display:block;padding:3px 10px;border-radius:4px;font-size:12px;color:#1d1d1f}
+.menu li::before{display:none}
+.menu li.si{background:#0A84FF;color:#fff;font-weight:600;box-shadow:0 0 0 3px rgba(255,201,40,.9)}
+.menu li.sep{height:1px;padding:0;margin:4px 6px;background:#D1D1D6}
+.ajustes .solapas{display:flex;justify-content:center;gap:2px;padding:8px 12px 0;font-size:11px}
+.ajustes .solapas i{font-style:normal;padding:3px 10px;border-radius:5px;color:#3a3a3c}
+.ajustes .solapas i.si{background:#fff;border:1px solid #D1D1D6;font-weight:600}
+.ajustes .radio{display:block;font-size:11px;color:#3a3a3c;padding-left:4px}
+.ajustes .candado{display:block;font-size:10.5px;color:#6e6e73;border-top:1px solid #E5E5EA;padding:8px 12px;background:#fff}
 /* Dibujos de las pantallas de Windows */
 .win{margin-top:auto;background:#fff;border:1px solid #D0D0D0;border-radius:8px;font:12.5px/1.4 "Segoe UI",system-ui,sans-serif;color:#1a1a1a;box-shadow:0 8px 20px -12px rgba(0,0,0,.35);overflow:hidden;text-align:left}
 .win .b{display:inline-block;padding:6px 14px;border-radius:4px;border:1px solid #C8C8C8;background:#FBFBFB;font-size:12px}
