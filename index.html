@@ -271,6 +271,9 @@ section{padding:clamp(56px,9vw,104px) 0}
 .ajustes .solapas i.si{background:#fff;border:1px solid #D1D1D6;font-weight:600}
 .ajustes .radio{display:block;font-size:11px;color:#3a3a3c;padding-left:4px}
 .ajustes .candado{display:block;font-size:10.5px;color:#6e6e73;border-top:1px solid #E5E5EA;padding:8px 12px;background:#fff}
+.dialogo .alerta{font-size:40px;line-height:1;margin:0 auto 6px}
+.mac .b.azul{background:#0A84FF;border-color:#0A84FF;color:#fff}
+.mac .b.anillo{box-shadow:0 0 0 3px rgba(255,201,40,.95);font-weight:600}
 /* Dibujos de las pantallas de Windows */
 .win{margin-top:auto;background:#fff;border:1px solid #D0D0D0;border-radius:8px;font:12.5px/1.4 "Segoe UI",system-ui,sans-serif;color:#1a1a1a;box-shadow:0 8px 20px -12px rgba(0,0,0,.35);overflow:hidden;text-align:left}
 .win .b{display:inline-block;padding:6px 14px;border-radius:4px;border:1px solid #C8C8C8;background:#FBFBFB;font-size:12px}
@@ -595,47 +598,42 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
           <img class="captura" src="img/instalador.jpg" width="760" height="512" loading="lazy" alt="Ventana del instalador: el ícono de ResetPro Tinta, una flecha y la carpeta Aplicaciones">
         </li>
         <li>
-          <b>Clic derecho → «Abrir»</b>
-          <span>La primera vez <b>no le des doble clic</b>. En <b>Aplicaciones</b>, haz <b>clic derecho</b> (o <b>Control + clic</b>) sobre <b>ResetPro Tinta</b> y elige <b>Abrir</b>.</span>
-          <div class="mac menu" aria-hidden="true">
-            <div class="archivo"><img src="img/icono.png" alt="" width="48" height="48"><b>ResetPro Tinta</b></div>
-            <ul>
-              <li class="si">Abrir</li>
-              <li>Mostrar contenido del paquete</li>
-              <li class="sep"></li>
-              <li>Trasladar a la papelera</li>
-              <li class="sep"></li>
-              <li>Obtener información</li>
-              <li>Renombrar</li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <b>Presiona «Abrir»</b>
-          <span>Sale un aviso de que macOS no puede verificar al desarrollador; abriéndola así, el aviso sí trae el botón <b>Abrir</b>. Si te pide tu contraseña, escríbela. Desde ahora se abre normal, con doble clic.</span>
+          <b>Ábrela y presiona «OK»</b>
+          <span>Dale doble clic. macOS muestra este aviso: presiona <b>OK</b>.</span>
           <div class="mac centro dialogo" aria-hidden="true">
-            <div class="app-ico"><img src="img/icono.png" alt="" width="56" height="56"><i>⚠️</i></div>
-            <h4>macOS no puede verificar el desarrollador de «ResetPro Tinta». ¿Seguro que quieres abrirla?</h4>
-            <p>Al abrir esta app, se anulará la seguridad del sistema…</p>
-            <div class="botones"><span class="b">Cancelar</span><span class="b si">Abrir</span></div>
+            <div class="alerta">⚠️</div>
+            <h4>“ResetPro Tinta” no se puede abrir porque proviene de un desarrollador no identificado.</h4>
+            <p>macOS no puede verificar si esta app está libre de software malicioso.</p>
+            <div class="botones"><span class="b si">OK</span></div>
           </div>
         </li>
         <li>
-          <b>¿No salió el botón «Abrir»?</b>
-          <span>Abre <b>Preferencias del Sistema</b> → <b>Seguridad y privacidad</b> → pestaña <b>General</b> y presiona <b>Abrir igualmente</b>. Si el botón está gris, primero haz clic en el <b>candado</b> de abajo y escribe tu contraseña.</span>
+          <b>Permítela en Preferencias</b>
+          <span>En el menú de la manzana , abre <b>Preferencias del Sistema</b> → <b>Seguridad y privacidad</b>. En la pestaña <b>General</b>, abajo, presiona <b>Abrir de todos modos</b>.</span>
           <div class="mac ajustes" aria-hidden="true">
             <div class="barra"><span class="flechas"><i>‹</i><i>›</i></span><strong>Seguridad y privacidad</strong></div>
             <div class="solapas"><i class="si">General</i><i>FileVault</i><i>Firewall</i><i>Privacidad</i></div>
             <div class="cuerpo">
-              <span class="radio">Permitir apps descargadas de: ◉ App Store y desarrolladores identificados</span>
+              <span class="radio">Permitir apps descargadas de:<br>○ App Store<br>◉ App Store y desarrolladores identificados</span>
               <div class="tarjeta col" style="margin-top:8px">
-                <div><span>Se bloqueó el uso de «ResetPro Tinta» porque no es de un desarrollador identificado.</span><span class="b marca">Abrir igualmente</span></div>
+                <div><span>Se bloqueó el uso de “ResetPro Tinta” porque no proviene de un desarrollador identificado.</span><span class="b marca">Abrir de todos modos</span></div>
               </div>
             </div>
             <span class="candado">🔒 Haz clic en el candado para realizar cambios.</span>
           </div>
         </li>
+        <li>
+          <b>Presiona «Abrir» (el botón gris)</b>
+          <span>Sale este último aviso. <b>Ojo:</b> el botón azul es <b>Cancelar</b>; presiona <b>Abrir</b>. Desde ahora se abre normal, con doble clic.</span>
+          <div class="mac centro dialogo" aria-hidden="true">
+            <div class="alerta">⚠️</div>
+            <h4>macOS no puede verificar el desarrollador de la app “ResetPro Tinta”. ¿Confirmas que quieres abrirla?</h4>
+            <p>Al abrir esta app, estarás invalidando la configuración de seguridad del sistema…</p>
+            <div class="botones"><span class="b anillo">Abrir</span><span class="b azul">Cancelar</span></div>
+          </div>
+        </li>
       </ol>
+      <p class="inst-nota">Atajo: también puedes hacer <b>clic derecho</b> sobre la app en Aplicaciones → <b>Abrir</b> → <b>Abrir</b>.</p>
       </div>
       <p class="inst-nota">Después conecta tu impresora por USB, abre la app y presiona <b>Buscar</b>.</p>
       </div>
