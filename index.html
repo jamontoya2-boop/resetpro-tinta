@@ -363,6 +363,47 @@ section{padding:clamp(56px,9vw,104px) 0}
 .pasos-inst{margin-top:6px!important}
 .inst-atajo{margin:14px 0 0;text-align:center;font-size:.88rem;color:var(--gris)}
 .inst-nota{display:block;max-width:none!important;text-align:center;margin:20px 0 0!important;padding:14px 16px;border-radius:14px;background:#E3F7EC;color:#0B5E2C!important;font-size:.95rem!important}
+/* Buscador rápido en la portada */
+.busca-rapida{margin:0 0 22px;max-width:520px}
+.busca-rapida label{display:block;font:600 .92rem/1.3 Inter,sans-serif;color:#DCE5F1;margin-bottom:8px}
+.br-campo{position:relative}
+.br-campo svg{position:absolute;left:16px;top:50%;width:20px;height:20px;transform:translateY(-50%);color:#8FA3BF;pointer-events:none}
+.br-campo input{width:100%;box-sizing:border-box;padding:15px 16px 15px 46px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font:500 1.02rem/1.2 Inter,sans-serif;outline:none;transition:border-color .15s,background .15s}
+.br-campo input::placeholder{color:#8496AE}
+.br-campo input:focus{border-color:var(--cian);background:rgba(255,255,255,.12)}
+.br-res:empty{display:none}
+.br-res{margin-top:10px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);font-size:.95rem;color:#DCE5F1}
+.br-res.si{background:rgba(20,164,77,.16);border-color:rgba(98,224,143,.5)}
+.br-res b{color:#fff}
+.br-res .br-ok{display:block;font:700 1.05rem/1.3 Outfit,sans-serif;color:#7BEAA3;margin-bottom:8px}
+.br-res .br-acc{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.br-res .br-acc a{display:inline-flex;align-items:center;padding:9px 14px;border-radius:999px;font:700 .9rem/1 Outfit,sans-serif;text-decoration:none}
+.br-res .br-acc a.prim{background:var(--magenta);color:#fff}
+.br-res .br-acc a.sec{background:rgba(255,255,255,.12);color:#fff}
+.br-res .br-sug{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.br-res .br-sug button{border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;border-radius:999px;padding:6px 12px;font:600 .88rem/1 Inter,sans-serif;cursor:pointer}
+.br-res .br-sug button:hover{border-color:var(--cian)}
+/* «Mándame el enlace» (solo en celular) */
+.al-correo{max-width:460px;margin:30px auto 0;background:var(--tinta);color:#fff;border-radius:22px;padding:28px 22px 22px;box-shadow:0 22px 46px -24px rgba(14,26,43,.6)}
+.al-correo[hidden]{display:none}
+.ac-ico{font-size:34px;line-height:1;margin-bottom:8px}
+.al-correo h3{font:800 1.35rem/1.2 Outfit,sans-serif;margin:0 0 8px;color:#fff}
+.al-correo>p{color:#C5D1E2;font-size:.95rem;margin:0 0 16px}
+#form-enlace{display:flex;flex-direction:column;gap:10px}
+#form-enlace input[type=email]{width:100%;box-sizing:border-box;padding:15px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font:500 1.02rem/1.2 Inter,sans-serif;outline:none;text-align:center}
+#form-enlace input[type=email]::placeholder{color:#8496AE}
+#form-enlace input[type=email]:focus{border-color:var(--cian)}
+#form-enlace .btn{justify-content:center;width:100%}
+#form-enlace .btn[disabled]{opacity:.6;cursor:wait}
+.trampa{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+.oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ac-msg:empty{display:none}
+.ac-msg{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.08);font-size:.95rem;color:#fff}
+.ac-msg.si{background:rgba(20,164,77,.22);color:#B9F5CD}
+.ac-msg.no{background:rgba(229,25,126,.2);color:#FFC2DE}
+.ac-nota{margin:12px 0 0!important;font-size:.8rem!important;color:#8FA3BF!important}
+.en-celular .sistemas{margin-top:26px}
+.en-celular .descarga .sub+.al-correo+.sistemas::before{content:"O descárgala directo si estás en una computadora:";display:block;grid-column:1/-1;color:var(--gris);font-size:.9rem;margin-bottom:-6px}
 /* Dibujos de las pantallas de Windows */
 .win{margin-top:auto;background:#fff;border:1px solid #D0D0D0;border-radius:8px;font:12.5px/1.4 "Segoe UI",system-ui,sans-serif;color:#1a1a1a;box-shadow:0 8px 20px -12px rgba(0,0,0,.35);overflow:hidden;text-align:left}
 .win .b{display:inline-block;padding:6px 14px;border-radius:4px;border:1px solid #C8C8C8;background:#FBFBFB;font-size:12px}
@@ -449,6 +490,14 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
         </a>
         <a class="btn btn-borde" href="#como">Cómo funciona</a>
       </div>
+      <form class="busca-rapida" id="busca-rapida" role="search" autocomplete="off">
+        <label for="modelo-rapido">¿Funciona con tu impresora? Escribe tu modelo</label>
+        <div class="br-campo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="modelo-rapido" type="search" placeholder="Por ejemplo: L3150, L4260, XP-2101" spellcheck="false" enterkeyhint="search">
+        </div>
+        <div class="br-res" id="res-rapido" aria-live="polite"></div>
+      </form>
       <ul class="confianza">
         <li>Te dice al instante si se puede desbloquear</li>
         <li>Más de 1,000 modelos</li>
@@ -677,6 +726,19 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
     <span class="etiqueta">Descarga gratis</span>
     <h2>Descarga ResetPro Tinta</h2>
     <p class="sub">Elige tu computadora. Descargar y revisar tu impresora es gratis: pagas solo si la app la detecta como compatible.</p>
+    <div class="al-correo" id="al-correo" hidden>
+      <div class="ac-ico" aria-hidden="true">📱</div>
+      <h3>¿Estás en el celular?</h3>
+      <p>La app se instala en una computadora. Te mandamos el enlace a tu correo para que la descargues cuando estés frente a ella.</p>
+      <form id="form-enlace" novalidate>
+        <label class="oculto" for="correo-enlace">Tu correo</label>
+        <input id="correo-enlace" type="email" inputmode="email" autocomplete="email" placeholder="tu@correo.com" required>
+        <input class="trampa" name="web" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn-prim" type="submit">Enviármelo</button>
+      </form>
+      <p class="ac-msg" id="msg-enlace" aria-live="polite"></p>
+      <p class="ac-nota">Solo lo usamos para mandarte el enlace. No te llenamos de correos.</p>
+    </div>
     <div class="sistemas" id="botones-descarga">
       <div class="so" id="so-mac">
         <span class="tuya">Tu computadora</span>
@@ -1026,6 +1088,87 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
   } else if (esMac) {
     document.getElementById("so-mac").classList.add("es-tuya");
   }
+})();
+</script>
+<script>
+// Buscador rápido de la portada y «Mándame el enlace» en celular
+(function () {
+  var GUIAS = ["artisan-730", "et-2400", "et-2720", "et-2750", "et-2800", "et-2850", "et-4700", "l1110", "l120", "l1210", "l1250", "l1300", "l1800", "l210", "l220", "l3060", "l310", "l3110", "l3150", "l3160", "l3210", "l3250", "l3260", "l355", "l365", "l375", "l380", "l395", "l396", "l4150", "l4160", "l4260", "l5190", "l5290", "l565", "l575", "l805", "t50", "tx235", "wf-2630", "wf-2750", "wf-3720", "xp-2100", "xp-2101", "xp-241", "xp-411", "xp-441"];
+  var norm = function (t) { return t.toUpperCase().replace(/EPSON|ECOTANK|EXPRESSION|SERIES|STYLUS|[\s\-_.]/g, ""); };
+  var guia = {};
+  GUIAS.forEach(function (g) { guia[norm(g)] = "/resetear-epson-" + g + "/"; });
+  var modelos = [];
+  JSON.parse(document.getElementById("modelos").textContent).forEach(function (gr) { gr[1].forEach(function (m) { modelos.push(m); }); });
+  var campo = document.getElementById("modelo-rapido"), res = document.getElementById("res-rapido");
+  var esc = function (t) { return t.replace(/[&<>"]/g, function (c) { return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]; }); };
+  function buscar() {
+    var q = norm(campo.value.trim());
+    res.className = "br-res";
+    if (q.length < 2) { res.innerHTML = ""; return; }
+    var exacto = null, parecidos = [];
+    modelos.forEach(function (m) {
+      var n = norm(m);
+      if (n === q) exacto = m;
+      else if (n.indexOf(q) === 0 || (q.length >= 3 && n.indexOf(q) > -1)) parecidos.push(m);
+    });
+    if (exacto) {
+      var g = guia[norm(exacto)];
+      res.className = "br-res si";
+      res.innerHTML = '<span class="br-ok">✓ Tu Epson ' + esc(exacto) + ' está en la lista de compatibles</span>' +
+        'Descarga la app gratis y presiona <b>Buscar</b>: te lo confirma con tu impresora conectada.' +
+        '<span class="br-acc"><a class="prim" href="#descargar">Descargar gratis</a>' +
+        (g ? '<a class="sec" href="' + g + '">Ver la guía de la ' + esc(exacto) + '</a>' : '') + '</span>';
+    } else if (parecidos.length) {
+      res.innerHTML = '¿Cuál es la tuya? Toca tu modelo:<span class="br-sug">' +
+        parecidos.slice(0, 8).map(function (m) { return '<button type="button">' + esc(m) + '</button>'; }).join("") + '</span>';
+    } else {
+      res.innerHTML = 'No encontramos <b>' + esc(campo.value.trim()) + '</b> en la lista. Revisa el modelo en la etiqueta del frente o de atrás de tu impresora. ' +
+        'Si no aparece, descarga la app gratis: con tu impresora conectada te dice al instante si se puede desbloquear.';
+    }
+  }
+  var t;
+  campo.addEventListener("input", function () { clearTimeout(t); t = setTimeout(buscar, 120); });
+  document.getElementById("busca-rapida").addEventListener("submit", function (e) { e.preventDefault(); buscar(); campo.blur(); });
+  res.addEventListener("click", function (e) {
+    if (e.target.tagName === "BUTTON") { campo.value = e.target.textContent; buscar(); }
+  });
+
+  // Celular: ofrecer el enlace por correo
+  var celular = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (!celular) return;
+  document.documentElement.classList.add("en-celular");
+  var caja = document.getElementById("al-correo");
+  caja.hidden = false;
+  // El botón rosa es «Enviármelo»; los de descarga quedan en segundo plano.
+  ["bajar-mac", "bajar-win"].forEach(function (id) { document.getElementById(id).className = "btn btn-sec"; });
+  var form = document.getElementById("form-enlace"), msg = document.getElementById("msg-enlace");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var correo = document.getElementById("correo-enlace").value.trim();
+    msg.className = "ac-msg";
+    if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(correo)) {
+      msg.className = "ac-msg no"; msg.textContent = "Revisa tu correo: parece que le falta algo."; return;
+    }
+    var boton = form.querySelector("button"); boton.disabled = true; boton.textContent = "Enviando…";
+    fetch("https://resetpro-tinta.resetpro.workers.dev/enlace", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ correo: correo, web: form.web.value }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return [r.status, d]; }); })
+      .then(function (x) {
+        if (x[1].ok) {
+          msg.className = "ac-msg si";
+          msg.innerHTML = "✓ Listo. Te lo mandamos a <b>" + esc(correo) + "</b>. Ábrelo desde tu computadora. Si no lo ves, revisa la carpeta de spam o promociones.";
+          form.hidden = true;
+        } else {
+          msg.className = "ac-msg no";
+          msg.textContent = x[0] === 429 ? "Ya pediste varios enlaces. Espera un rato e intenta de nuevo."
+            : x[1].error === "correo" ? "Revisa tu correo: parece que le falta algo."
+            : "No se pudo mandar. Intenta otra vez en unos minutos o escríbenos a soporte@resetprotinta.com.";
+        }
+      })
+      .catch(function () { msg.className = "ac-msg no"; msg.textContent = "Sin conexión. Revisa tu internet e intenta de nuevo."; })
+      .then(function () { boton.disabled = false; boton.textContent = "Enviármelo"; });
+  });
 })();
 </script>
 </body>
