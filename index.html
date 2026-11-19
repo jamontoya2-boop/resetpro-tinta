@@ -68,6 +68,10 @@ section{padding:clamp(56px,9vw,104px) 0}
 .menu{display:flex;gap:26px;font-size:.95rem}
 .menu a{text-decoration:none;opacity:.8}
 .menu a:hover{opacity:1}
+.menu{align-items:center}
+.menu a.menu-cta{opacity:1;display:inline-flex;align-items:center;gap:7px;background:var(--magenta);color:#fff;padding:9px 16px;border-radius:999px;font:700 .9rem/1 Outfit,sans-serif;box-shadow:0 8px 20px -8px rgba(229,25,126,.7);transition:transform .15s}
+.menu a.menu-cta:hover{transform:translateY(-1px)}
+.menu a.menu-cta svg{width:16px;height:16px}
 .barra .btn{padding:10px 18px;font-size:.92rem}
 @media (max-width:860px){.menu{display:none}}
 
@@ -470,6 +474,7 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
       <a href="#como">Cómo funciona</a>
       <a href="#compatibles">Compatibles</a>
       <a href="#preguntas">Preguntas</a>
+      <a class="menu-cta" href="#descargar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Descargar gratis</a>
     </nav>
   </div>
 </header>
@@ -1099,11 +1104,38 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
   GUIAS.forEach(function (g) { guia[norm(g)] = "/resetear-epson-" + g + "/"; });
   var modelos = [];
   JSON.parse(document.getElementById("modelos").textContent).forEach(function (gr) { gr[1].forEach(function (m) { modelos.push(m); }); });
+  // Contador anónimo (sin cookies ni datos personales): visitas, descargas y modelos buscados
+  function contar(d) {
+    try { navigator.sendBeacon("https://resetpro-tinta.resetpro.workers.dev/evento", JSON.stringify(d)); } catch (e) {}
+  }
+  try {
+    if (!sessionStorage.getItem("rpt-visita")) {
+      sessionStorage.setItem("rpt-visita", "1");
+      var r = ""; try { r = new URL(document.referrer).hostname; } catch (e) {}
+      var ref = !r || r === location.hostname ? "directo" : /google\./.test(r) ? "google" : /facebook|fb\.|messenger|instagram/.test(r) ? "facebook"
+        : /youtube|youtu\.be/.test(r) ? "youtube" : /bing\./.test(r) ? "bing" : /whatsapp|wa\.me/.test(r) ? "whatsapp" : "otro";
+      contar({ tipo: "visita", ref: ref, cel: /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) });
+    }
+  } catch (e) {}
+  ["mac", "win"].forEach(function (so) {
+    document.getElementById("bajar-" + so).addEventListener("click", function () { contar({ tipo: "descarga", so: so }); });
+  });
+  var contados = {}, tContar;
+  function contarBusqueda(modelo, encontrado) {
+    clearTimeout(tContar);
+    tContar = setTimeout(function () {
+      var k = norm(modelo);
+      if (contados[k]) return;
+      contados[k] = 1;
+      contar({ tipo: "busqueda", modelo: modelo, encontrado: encontrado });
+    }, 1500);
+  }
   var campo = document.getElementById("modelo-rapido"), res = document.getElementById("res-rapido");
   var esc = function (t) { return t.replace(/[&<>"]/g, function (c) { return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]; }); };
   function buscar() {
     var q = norm(campo.value.trim());
     res.className = "br-res";
+    clearTimeout(tContar);
     if (q.length < 2) { res.innerHTML = ""; return; }
     var exacto = null, parecidos = [];
     modelos.forEach(function (m) {
@@ -1112,6 +1144,7 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
       else if (n.indexOf(q) === 0 || (q.length >= 3 && n.indexOf(q) > -1)) parecidos.push(m);
     });
     if (exacto) {
+      contarBusqueda(exacto, true);
       var g = guia[norm(exacto)];
       res.className = "br-res si";
       res.innerHTML = '<span class="br-ok">✓ Tu Epson ' + esc(exacto) + ' está en la lista de compatibles</span>' +
@@ -1122,6 +1155,7 @@ footer .legal{max-width:640px;font-size:.82rem;opacity:.85}
       res.innerHTML = '¿Cuál es la tuya? Toca tu modelo:<span class="br-sug">' +
         parecidos.slice(0, 8).map(function (m) { return '<button type="button">' + esc(m) + '</button>'; }).join("") + '</span>';
     } else {
+      contarBusqueda(campo.value.trim(), false);
       res.innerHTML = 'No encontramos <b>' + esc(campo.value.trim()) + '</b> en la lista. Revisa el modelo en la etiqueta del frente o de atrás de tu impresora. ' +
         'Si no aparece, descarga la app gratis: con tu impresora conectada te dice al instante si se puede desbloquear.';
     }
