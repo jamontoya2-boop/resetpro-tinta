@@ -338,6 +338,30 @@ section{padding:clamp(56px,9vw,104px) 0}
 @keyframes i-g2{0%,43%{opacity:0;transform:translateY(6px)}47%,57%{opacity:1;transform:none}61%,100%{opacity:0;transform:translateY(-6px)}}
 @keyframes i-g3{0%,59%{opacity:0;transform:translateY(6px)}63%,95%{opacity:1;transform:none}100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.anim *,.ilus .globo{animation:none!important}.ilus .globo.medio,.ilus .globo.bien{display:none}}
+/* Sección de descarga: tarjetas por sistema y guía en caja aparte */
+.descarga{background:linear-gradient(180deg,var(--papel),#fff 70%)}
+.sistemas{display:grid;grid-template-columns:repeat(2,minmax(0,300px));justify-content:center;gap:20px;margin:34px auto 0}
+@media (max-width:640px){.sistemas{grid-template-columns:1fr;max-width:340px}}
+.so{position:relative;background:#fff;border:1px solid var(--linea);border-radius:20px;padding:30px 22px 24px;display:flex;flex-direction:column;align-items:center;box-shadow:0 18px 40px -26px rgba(14,26,43,.35)}
+.so.es-tuya{border:2px solid var(--magenta);box-shadow:0 22px 46px -24px rgba(229,25,126,.45)}
+.so .tuya{display:none;position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--magenta);color:#fff;font:700 .74rem/1 Inter,sans-serif;letter-spacing:.04em;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.so.es-tuya .tuya{display:block}
+.so-ico{width:62px;height:62px;border-radius:18px;background:var(--papel);display:grid;place-items:center;color:var(--tinta);margin-bottom:12px}
+.so-ico svg{width:34px;height:34px}
+.so h3{font:800 1.4rem/1.1 Outfit,sans-serif;margin:0 0 6px}
+.so p{color:var(--gris);font-size:.93rem;margin:0 0 20px;line-height:1.5}
+.so .btn{margin-top:auto;width:100%;justify-content:center;padding:15px 18px}
+.so .btn svg{width:20px;height:20px;flex:none}
+.req-mini{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;margin:26px 0 0;padding:0;color:var(--gris);font-size:.92rem}
+.instalar{max-width:920px;margin:64px auto 0;background:#fff;border:1px solid var(--linea);border-radius:24px;padding:clamp(22px,4vw,40px) clamp(16px,4vw,40px) clamp(22px,4vw,36px);box-shadow:0 18px 40px -30px rgba(14,26,43,.35)}
+.inst-paso{display:block;text-align:center;font:600 .78rem/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);margin-bottom:10px}
+.instalar h3{font-size:clamp(1.35rem,3vw,1.7rem)!important;margin-bottom:18px!important}
+.guia>p:first-child{color:var(--gris);text-align:center;margin:0 auto 22px;max-width:620px}
+.cual-tit{text-align:center;font:700 .98rem/1.3 Outfit,sans-serif;margin:0 0 10px}
+.versiones{margin:0 auto 8px!important}
+.pasos-inst{margin-top:6px!important}
+.inst-atajo{margin:14px 0 0;text-align:center;font-size:.88rem;color:var(--gris)}
+.inst-nota{display:block;max-width:none!important;text-align:center;margin:20px 0 0!important;padding:14px 16px;border-radius:14px;background:#E3F7EC;color:#0B5E2C!important;font-size:.95rem!important}
 /* Dibujos de las pantallas de Windows */
 .win{margin-top:auto;background:#fff;border:1px solid #D0D0D0;border-radius:8px;font:12.5px/1.4 "Segoe UI",system-ui,sans-serif;color:#1a1a1a;box-shadow:0 8px 20px -12px rgba(0,0,0,.35);overflow:hidden;text-align:left}
 .win .b{display:inline-block;padding:6px 14px;border-radius:4px;border:1px solid #C8C8C8;background:#FBFBFB;font-size:12px}
